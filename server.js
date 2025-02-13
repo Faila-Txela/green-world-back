@@ -19,7 +19,7 @@ app.get("/user", async (req, res) => {
         }
 
         const [result] = await db.execute(
-            "INSERT INTO Users (nomeUser, emailUser, senha) VALUES ('Txela', 'albertinasauimbo17@gmail.com', '1234567')",
+            "INSERT INTO Users (nomeUser, emailUser, senha, cadastroTime) VALUES ('Txela', 'albertinasauimbo17@gmail.com', '1234567',NOW())",
         );
 
         res.json({ message: "Usuário inserido com sucesso.", insertId: result.insertId });
