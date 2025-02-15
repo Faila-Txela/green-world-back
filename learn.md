@@ -43,7 +43,7 @@ app.get("/", async (req, res) => {
     //Tratamento de erro usando o try/catch
 
     try {
-        await db.execute("INSERT INTO Users (nomeUser, emailUser, senha) VALUES ('Albertina Sauimbo', 'albertinasauimbo17@gmail.com', '1234567', '12h30min')");
+        await db.execute("INSERT INTO Users (nomeUser, emailUser, senha) VALUES ('Albertina Sauimbo', 'albertinasauimbo17@gmail.com', '1234567')");
         res.json({ message: "Usuário inserido com sucesso." });
     } catch (err) {
 

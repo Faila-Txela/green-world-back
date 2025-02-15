@@ -15,7 +15,7 @@ let db;
 app.get("/user", async (req, res) => {
     try {
         if (!db) {
-            return res.status(500).json({ error: "Banco de dados ainda não conectado" });
+            return res.status(500).json({ error: "Banco de dados não conectado" });
         }
 
         const [result] = await db.execute(
@@ -24,11 +24,11 @@ app.get("/user", async (req, res) => {
 
         res.json({ message: "Usuário inserido com sucesso.", insertId: result.insertId });
     } catch (err) {
-        console.error("❌ Erro ao executar os scripts da BD:", err.message);
+        console.error("Erro ao executar os scripts da BD:", err.message);
         res.status(500).json({ error: "Erro no banco de dados", details: err.message });
     }
 });
 
 app.listen(3001, () => {
-    console.log("🚀 Servidor rodando na porta 3001");
+    console.log("Servidor rodando na porta 3001");
 });
