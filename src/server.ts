@@ -1,23 +1,22 @@
-import express, { Request, Response } from 'express';
+import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import prisma from './lib/prisma';
 
-const app = express();
+const app = fastify({
+    logger:true
+})
 
 
-app.use(express.json());
-
-
-app.get('/', (req: Request, res: Response) => {
+app.get('/', async (req: FastifyRequest, res: FastifyReply) => {
   res.send('♻️ Olá, seja bem-vindo á Green World!');
 });
 
-app.get('/users', async (req: Request, res: Response) => {
+app.get('/users', async (req: FastifyRequest, res: FastifyReply) => {
     try{
         const users = await prisma.users.findMany()
-        res.status(200).json(users)
+        res.status(200).send(users)
     }
     catch(error){
-        res.status(500).json({error: "Erro ao buscar usuarios"})
+        res.status(500).send({error: "Erro ao buscar usuarios"})
     }
 })
 

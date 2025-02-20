@@ -1,11 +1,9 @@
-import express, { Request, Response } from 'express';
 import prisma from '../lib/prisma';
 import { userVAlidation } from '../validations/user';
 
-const router = express.Router();
 
 // Classe para gerenciar rotas de usuário
-class Txela {
+class Users {
   constructor() {
     this.inicializarRotas();
   }
@@ -119,6 +117,6 @@ class Txela {
 }
 
 // Inicializa as rotas da classe
-new Txela();
+new Users();
 
 export default router;
