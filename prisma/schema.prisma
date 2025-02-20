@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id                String              @id  @default(uuid())
+  nome              String
+  email             String              @unique(map: "Users_email_key")
+  senha             String
+  tipoUser_id       String
+  createAt          DateTime            @default(now())
+  updateAt          DateTime            @updatedAt
+  amontoadorelatado AmontoadoRelatado[]
+  notificacao       Notificacao[]
+  relatoriocoleta   RelatorioColeta[]
+  tipouser          Tipouser            @relation(fields: [tipoUser_id], references: [id], map: "Users_tipoUser_id_fkey")
+
+  @@index([tipoUser_id], map: "Users_tipoUser_id_fkey")
+}
+
+model Tipouser {
+  id       String            @id  @default(uuid())
+  tipoUser tipouser_tipoUser
+  users    Users[]
+}
+
+enum tipouser_tipoUser {
+  Empresas_de_Recolha
+  Cidadao_Comum       @map("Cidadão_Comum")
+  Agentes
+}
+
+model AmontoadoRelatado {
+  id              String                       @id @default(uuid())
+  user_id         String
+  desc            String
+  foto            String
+  latitude        Decimal
+  longitude       Decimal
+  createAt        DateTime                     @default(now())
+  updateAt        DateTime
+  quantidade      Amontoadorelatado_Quantidade
+  localidade      Amontoadorelatado_Localidade
+  categoria       Amontoadorelatado_Categoria
+  prioridade      Amontoadorelatado_Prioridade
+  status          Amontoadorelatado_Status
+  users           Users                        @relation(fields: [user_id], references: [id], map: "AmontoadoRelatado_user_id_fkey")
+  relatoriocoleta RelatorioColeta[]
+
+  @@index([user_id], map: "AmontoadoRelatado_user_id_fkey")
+}
+
+enum Relatoriocoleta_StatusColeta {
+  RETIRADO
+  NAO_RETIRADO
+  PENDENTE
+}
+
+enum Amontoadorelatado_Quantidade {
+  PEQUENO
+  MEDIO
+  GRANDE
+}
+
+enum Amontoadorelatado_Localidade {
+  LUANDA
+  CAZENGA
+  MUSSULO
+  MUTAMBA
+  ICOLO_E_BENGO
+  MAIANGA
+  VIANA
+  SAMBA
+  CACUACO
+  BELAS
+  RANGEL
+  QUICAMA
+  CALUMBO
+  CAMAMA
+  HOJI_YA_HENDA
+}
+
+enum Amontoadorelatado_Categoria {
+  ORGANICO
+  RECICLAVEL
+  PERIGOSO
+  ELECTRONICO
+  OUTROS
+}
+
+enum Amontoadorelatado_Prioridade {
+  BAIXA
+  MEDIA
+  ALTA
+}
+
+enum Amontoadorelatado_Status {
+  RESOLVIDO
+  PENDENTE
+}
+
+model Notificacao {
+  id       String   @id  @default(uuid())
+  id_user  String
+  titulo   String
+  mensagem String
+  createAt DateTime @default(now())
+  updateAt DateTime
+  users    Users    @relation(fields: [id_user], references: [id], map: "Notificacao_id_user_fkey")
+
+  @@index([id_user], map: "Notificacao_id_user_fkey")
+}
+
+model RelatorioColeta {
+  id               String                       @id  @default(uuid())
+  user_id           String
+  amontoado_id      String
+  dataColeta        DateTime                     @default(now())
+  statusColeta      Relatoriocoleta_StatusColeta
+  amontoadorelatado AmontoadoRelatado            @relation(fields: [amontoado_id], references: [id], map: "RelatorioColeta_amontoado_id_fkey")
+  users             Users                        @relation(fields: [user_id], references: [id], map: "RelatorioColeta_user_id_fkey")
+
+  @@index([amontoado_id], map: "RelatorioColeta_amontoado_id_fkey")
+  @@index([user_id], map: "RelatorioColeta_user_id_fkey")
+}
+
