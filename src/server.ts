@@ -1,5 +1,6 @@
 import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import prisma from './lib/prisma';
+import { start } from 'repl';
 
 const app = fastify({
     logger:true
@@ -20,7 +21,4 @@ app.get('/users', async (req: FastifyRequest, res: FastifyReply) => {
     }
 })
 
-
-app.listen(3000, () => {
-  console.log(`🚀 Servidor rodando na porta 3000`);
-});
+start()

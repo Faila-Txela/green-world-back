@@ -1,5 +1,8 @@
 import prisma from '../lib/prisma';
+import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { userVAlidation } from '../validations/user';
+
+const app: FastifyInstance = fastify();
 
 
 // Classe para gerenciar rotas de usuário
@@ -10,23 +13,23 @@ class Users {
 
   inicializarRotas() {
     // Criar um usuário
-    router.post('/usuarios', this.criarUsuario);
+    app.post('/usuarios', this.criarUsuario);
 
     // Listar todos os usuários
-    router.get('/usuarios', this.listarUsuarios);
+    app.get('/usuarios', this.listarUsuarios);
 
     // Buscar um usuário por ID
-    router.get('/usuarios/:id', this.buscarUsuarioPorId);
+    app.get('/usuarios/:id', this.buscarUsuarioPorId);
 
     // Atualizar um usuário
-    router.put('/usuarios/:id', this.atualizarUsuario);
+    app.put('/usuarios/:id', this.atualizarUsuario);
 
     // Excluir um usuário
-    router.delete('/usuarios/:id', this.excluirUsuario);
+    app.delete('/usuarios/:id', this.excluirUsuario);
   }
 
   // ✅ Criar um usuário
-  private async criarUsuario(req: Request, res: Response): Promise<void> {
+  private async criarUsuario(req: FastifyRequest, res: FastifyReply): Promise<void> {
     try {
       const { nome, email, senha, tipo_usuario } = userVAlidation.getData.parse(req.body);
 
@@ -42,26 +45,26 @@ class Users {
         },
       });
 
-      res.status(201).json(novoUsuario);
+      res.status(201).send(novoUsuario);
     } catch (error) {
       console.error('Erro ao criar usuário:', error);
-      res.status(400).json({ erro: 'Erro ao criar usuário.' });
+      res.status(400).send({ erro: 'Erro ao criar usuário.' });
     }
   }
 
   // ✅ Listar todos os usuários
-  private async listarUsuarios(_req: Request, res: Response): Promise<void> {
+  private async listarUsuarios(_req: FastifyRequest, res: FastifyReply): Promise<void> {
     try {
       const usuarios = await prisma.users.findMany();
-      res.json(usuarios);
+      res.send(usuarios);
     } catch (error) {
       console.error('Erro ao listar usuários:', error);
-      res.status(500).json({ erro: 'Erro ao listar usuários.' });
+      res.status(500).send({ erro: 'Erro ao listar usuários.' });
     }
   }
 
   // ✅ Buscar um usuário por ID
-  private async buscarUsuarioPorId(req: Request, res: Response): Promise<void> {
+  private async buscarUsuarioPorId(req: FastifyRequest<{ Params: { id: string } }>, res: FastifyReply): Promise<void> {
     try {
       const { id } = req.params;
 
@@ -70,19 +73,19 @@ class Users {
       });
 
       if (!usuario) {
-        res.status(404).json({ erro: 'Usuário não encontrado.' });
+        res.status(404).send({ erro: 'Usuário não encontrado.' });
         return;
       }
 
-      res.json(usuario);
+      res.send(usuario);
     } catch (error) {
       console.error('Erro ao buscar usuário por ID:', error);
-      res.status(500).json({ erro: 'Erro interno do servidor.' });
+      res.status(500).send({ erro: 'Erro interno do servidor.' });
     }
   }
 
   // ✅ Atualizar um usuário
-  private async atualizarUsuario(req: Request, res: Response): Promise<void> {
+  private async atualizarUsuario(req: FastifyRequest<{ Params: { id: string }, Body: { nome: string, email: string, senha: string } }>, res: FastifyReply): Promise<void> {
     try {
       const { id } = req.params;
       const { nome, email, senha } = req.body;
@@ -92,15 +95,15 @@ class Users {
         data: { nome, email, senha },
       });
 
-      res.json(usuarioAtualizado);
+      res.send(usuarioAtualizado);
     } catch (error) {
       console.error('Erro ao atualizar usuário:', error);
-      res.status(400).json({ erro: 'Erro ao atualizar usuário.' });
+      res.status(400).send({ erro: 'Erro ao atualizar usuário.' });
     }
   }
 
   // ✅ Excluir um usuário
-  private async excluirUsuario(req: Request, res: Response): Promise<void> {
+  private async excluirUsuario(req: FastifyRequest<{ Params: { id: string } }>, res: FastifyReply): Promise<void> {
     try {
       const { id } = req.params;
 
@@ -111,7 +114,7 @@ class Users {
       res.status(204).send();
     } catch (error) {
       console.error('Erro ao excluir usuário:', error);
-      res.status(400).json({ erro: 'Erro ao excluir usuário.' });
+      res.status(400).send({ erro: 'Erro ao excluir usuário.' });
     }
   }
 }
@@ -119,4 +122,4 @@ class Users {
 // Inicializa as rotas da classe
 new Users();
 
-export default router;
+export default app;
