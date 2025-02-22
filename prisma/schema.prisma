@@ -25,6 +25,10 @@ model Users {
   notificacao       Notificacao[]
   relatoriocoleta   RelatorioColeta[]
   tipouser          Tipouser            @relation(fields: [tipoUser_id], references: [id], map: "Users_tipoUser_id_fkey")
+  feedback          Feedback[]
+  pontos            Pontos[]
+  resgate           Resgate[]
+  configuracao              Configuracao[]
 
   @@index([tipoUser_id], map: "Users_tipoUser_id_fkey")
 }
@@ -36,9 +40,23 @@ model Tipouser {
 }
 
 enum tipouser_tipoUser {
-  Empresas_de_Recolha
-  Cidadao_Comum       @map("Cidadão_Comum")
-  Agentes
+  Empresas_de_Recolha @map("Empresa de Recolha")
+  Cidadao_Comum       @map("Cidadão Comum")
+}
+
+model Empresa {
+  id String @id  @default(uuid())
+  nomeEmpresa String 
+  emailEmpresa String @unique
+  estadoEmpresa EstadoEmpresa
+  localActuacao Amontoadorelatado_Localidade
+  pagamento Pagamento[]
+  servico Servico[]
+}
+
+enum EstadoEmpresa{
+  PRIVADO  
+  PUBLICO
 }
 
 model AmontoadoRelatado {
@@ -55,10 +73,10 @@ model AmontoadoRelatado {
   categoria       Amontoadorelatado_Categoria
   prioridade      Amontoadorelatado_Prioridade
   status          Amontoadorelatado_Status
-  users           Users                        @relation(fields: [user_id], references: [id], map: "AmontoadoRelatado_user_id_fkey")
+  users           Users                        @relation(fields: [user_id], references: [id])
   relatoriocoleta RelatorioColeta[]
 
-  @@index([user_id], map: "AmontoadoRelatado_user_id_fkey")
+  @@index([user_id])
 }
 
 enum Relatoriocoleta_StatusColeta {
@@ -117,9 +135,25 @@ model Notificacao {
   mensagem String
   createAt DateTime @default(now())
   updateAt DateTime
-  users    Users    @relation(fields: [id_user], references: [id], map: "Notificacao_id_user_fkey")
+  users    Users    @relation(fields: [id_user], references: [id])
 
-  @@index([id_user], map: "Notificacao_id_user_fkey")
+  @@index([id_user])
+}
+
+model Feedback {
+  id String @id @default(uuid())
+  id_user String
+  feedback String
+  createAt DateTime @default(now())
+  tipo_feedack TipoFeedback
+  user Users @relation(fields: [id_user], references: [id])
+  @@index([id_user])
+}
+
+enum TipoFeedback {
+  SUGESTAO
+  RECLAMACAO
+  ELOGIO
 }
 
 model RelatorioColeta {
@@ -128,10 +162,87 @@ model RelatorioColeta {
   amontoado_id      String
   dataColeta        DateTime                     @default(now())
   statusColeta      Relatoriocoleta_StatusColeta
-  amontoadorelatado AmontoadoRelatado            @relation(fields: [amontoado_id], references: [id], map: "RelatorioColeta_amontoado_id_fkey")
-  users             Users                        @relation(fields: [user_id], references: [id], map: "RelatorioColeta_user_id_fkey")
+  amontoadorelatado AmontoadoRelatado            @relation(fields: [amontoado_id], references: [id])
+  users             Users                        @relation(fields: [user_id], references: [id])
 
-  @@index([amontoado_id], map: "RelatorioColeta_amontoado_id_fkey")
-  @@index([user_id], map: "RelatorioColeta_user_id_fkey")
+  @@index([amontoado_id])
+  @@index([user_id])
 }
 
+model Pagamento {
+  id String @id @default(uuid())
+  id_empresa String
+  valor Decimal
+  metodo_pagamento MetodoPagamento
+  status_pagamento StatusPagamento
+  createAt DateTime @default(now())
+  upadateAt    DateTime
+  empresa Empresa @relation(fields: [id_empresa], references: [id])
+  @@index([ id_empresa])
+}
+
+model Servico {
+  id           String   @id @default(uuid())
+  id_empresa   String
+  titulo       String
+  descricao    String
+  preco        Decimal
+  createAt     DateTime @default(now())
+  updateAt     DateTime @updatedAt
+  empresa      Empresa  @relation(fields: [id_empresa], references: [id])
+
+  @@index([id_empresa])
+}
+
+
+enum MetodoPagamento {
+  VISA
+  TRASNFERENCIA_BANCARIA
+}
+
+enum StatusPagamento {
+  PAGO
+  NAO_PAGO
+}
+
+model Pontos {
+  id String @id @default(uuid())
+  id_user String
+  pontos Int
+  createAt DateTime @default(now())
+  upadateAt    DateTime
+  users Users @relation(fields: [id_user], references: [id])
+   @@index([id_user])
+}
+
+model Resgate {
+  id           String   @id @default(uuid())
+  user_id      String
+  recompensa_id String
+  createAt  DateTime @default(now())
+  upadateAt    DateTime
+  user       Users      @relation(fields: [user_id], references: [id])
+  recompensa Recompensa @relation(fields: [recompensa_id], references: [id])
+
+  @@index([user_id])
+  @@index([recompensa_id])
+}
+
+
+model Recompensa {
+  id          String   @id @default(uuid())
+  nome        String
+  descricao   String
+  pontosNecessarios Int
+  resgates    Resgate[]
+}
+
+
+model Configuracao {
+  id        String    @id    @default(uuid())
+  acao      String
+  data_acao DateTime          @default(now())
+  id_user   String
+  user      Users             @relation(fields: [id_user], references: [id])
+  @@index([id_user])
+}
