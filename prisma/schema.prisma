@@ -14,98 +14,120 @@ datasource db {
 }
 
 model Users {
-  id                String              @id  @default(uuid())
+  id                String              @id @default(uuid())
   nome              String
-  email             String              @unique(map: "Users_email_key")
+  email             String              @unique()
   senha             String
   tipoUser_id       String
+  iban              String
+  nome_titular      String
   createAt          DateTime            @default(now())
   updateAt          DateTime            @updatedAt
   amontoadorelatado AmontoadoRelatado[]
   notificacao       Notificacao[]
   relatoriocoleta   RelatorioColeta[]
-  tipouser          Tipouser            @relation(fields: [tipoUser_id], references: [id])
+  tipoUser          TipoUser            @relation(fields: [tipoUser_id], references: [id])
   feedback          Feedback[]
   pontos            Pontos[]
-  resgate           Resgate[]
-  configuracao              Configuracao[]
+  Comentario        Comentario[]
+  Pagamento         Pagamento[]
 
   @@index([tipoUser_id])
 }
 
-model Tipouser {
-  id       String            @id  @default(uuid())
-  empresa  Empresa[]
-  users    Users[]
-}
-model Empresa {
-  id String @id  @default(uuid())
-  nomeEmpresa String 
-  tipoUser_id String
-  emailEmpresa String @unique
-  estadoEmpresa EstadoEmpresa
-  localActuacao Amontoadorelatado_Localidade
-  user Tipouser  @relation(fields: [tipoUser_id], references: [id])
-  pagamento Pagamento[]
-  servico Servico[]
+model TipoUser {
+  id    String  @id @default(uuid())
+  nome  String
+  users Users[]
 }
 
-enum EstadoEmpresa{
-  PRIVADO  
+model TipoEmpresa {
+  id      String    @id @default(uuid())
+  nome    String
+  Empresa Empresa[]
+}
+
+model Empresa {
+  id             String        @id @default(uuid())
+  nome           String
+  enderecoId     String
+  tipoEmpresa_id String
+  email          String        @unique
+  nif            String
+  createAt       DateTime      @default(now())
+  updateAt       DateTime      @updatedAt
+  endereco       Endereco      @relation(fields: [enderecoId], references: [id])
+  estadoEmpresa  EstadoEmpresa
+  tipo_emprea    TipoEmpresa   @relation(fields: [tipoEmpresa_id], references: [id])
+  pagamento      Pagamento[]
+}
+
+model Endereco {
+  id          String    @id @default(uuid())
+  telefone    String
+  rua         String
+  bairro      String
+  provinciaId String
+  municipioId String
+  provincia   Provincia @relation(fields: [provinciaId], references: [id])
+  municipio   Municipio @relation(fields: [municipioId], references: [id])
+  Empresa     Empresa[]
+}
+
+enum EstadoEmpresa {
+  PRIVADO
   PUBLICO
+  MISTAS
 }
 
 model AmontoadoRelatado {
-  id              String                       @id @default(uuid())
+  id              String            @id @default(uuid())
   user_id         String
-  desc            String
-  foto            String
+  descricao       String
   latitude        Decimal
   longitude       Decimal
-  createAt        DateTime                     @default(now())
-  updateAt        DateTime
-  quantidade      Amontoadorelatado_Quantidade
-  localidade      Amontoadorelatado_Localidade
-  categoria       Amontoadorelatado_Categoria
-  prioridade      Amontoadorelatado_Prioridade
-  status          Amontoadorelatado_Status
-  users           Users                        @relation(fields: [user_id], references: [id])
+  createAt        DateTime          @default(now())
+  updateAt        DateTime          @updatedAt
+  users           Users             @relation(fields: [user_id], references: [id])
   relatoriocoleta RelatorioColeta[]
+  midia           Midia[]
+  Comentario      Comentario[]
 
   @@index([user_id])
 }
 
-enum Relatoriocoleta_StatusColeta {
+model Midia {
+  id                  String             @id @default(uuid())
+  caminho             String
+  tipoMidiaId         String
+  amontoadoRelatadoId String?
+  pagamentoId         String?
+  AmontoadoRelatado   AmontoadoRelatado? @relation(fields: [amontoadoRelatadoId], references: [id])
+  Pagamento           Pagamento?         @relation(fields: [pagamentoId], references: [id])
+}
+
+enum StatusColeta {
   RETIRADO
   NAO_RETIRADO
   PENDENTE
 }
 
-enum Amontoadorelatado_Quantidade {
-  PEQUENO
-  MEDIO
-  GRANDE
+model Provincia {
+  id         String      @id @default(uuid())
+  nome       String
+  municipios Municipio[]
+  Endereco   Endereco[]
 }
 
-enum Amontoadorelatado_Localidade {
-  LUANDA
-  CAZENGA
-  MUSSULO
-  MUTAMBA
-  ICOLO_E_BENGO
-  MAIANGA
-  VIANA
-  SAMBA
-  CACUACO
-  BELAS
-  RANGEL
-  QUICAMA
-  CALUMBO
-  CAMAMA
-  HOJI_YA_HENDA
+model Municipio {
+  id          String     @id @default(uuid())
+  provinciaId String
+  nome        String
+  provincia   Provincia  @relation(fields: [provinciaId], references: [id])
+  Endereco    Endereco[]
 }
 
-enum Amontoadorelatado_Categoria {
+enum Categoria {
   ORGANICO
   RECICLAVEL
   PERIGOSO
@@ -113,132 +135,67 @@ enum Amontoadorelatado_Categoria {
   OUTROS
 }
 
-enum Amontoadorelatado_Prioridade {
+enum Prioridade {
   BAIXA
   MEDIA
   ALTA
 }
 
-enum Amontoadorelatado_Status {
-  RESOLVIDO
-  PENDENTE
-}
-
 model Notificacao {
-  id       String   @id  @default(uuid())
-  id_user  String
+  id       String   @id @default(uuid())
+  userId   String
   titulo   String
   mensagem String
   createAt DateTime @default(now())
   updateAt DateTime
-  users    Users    @relation(fields: [id_user], references: [id])
-
-  @@index([id_user])
+  users    Users    @relation(fields: [userId], references: [id])
 }
 
 model Feedback {
-  id String @id @default(uuid())
-  id_user String
-  feedback String
-  createAt DateTime @default(now())
-  tipo_feedack TipoFeedback
-  user Users @relation(fields: [id_user], references: [id])
-  @@index([id_user])
+  id        String   @id @default(uuid())
+  userId    String
+  feedback  String
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      Users    @relation(fields: [userId], references: [id])
 }
 
-enum TipoFeedback {
-  SUGESTAO
-  RECLAMACAO
-  ELOGIO
+model Comentario {
+  id                  String            @id @default(uuid())
+  userId              String
+  amontoadoRelatadoId String
+  conteudo            String
+  user                Users             @relation(fields: [userId], references: [id])
+  amontoadoRelatado   AmontoadoRelatado @relation(fields: [amontoadoRelatadoId], references: [id])
 }
 
 model RelatorioColeta {
-  id               String                       @id  @default(uuid())
+  id                String            @id @default(uuid())
   user_id           String
   amontoado_id      String
-  dataColeta        DateTime                     @default(now())
-  statusColeta      Relatoriocoleta_StatusColeta
-  amontoadorelatado AmontoadoRelatado            @relation(fields: [amontoado_id], references: [id])
-  users             Users                        @relation(fields: [user_id], references: [id])
-
-  @@index([amontoado_id])
-  @@index([user_id])
+  dataColeta        DateTime          @default(now())
+  statusColeta      StatusColeta      @default(NAO_RETIRADO)
+  amontoadorelatado AmontoadoRelatado @relation(fields: [amontoado_id], references: [id])
+  users             Users             @relation(fields: [user_id], references: [id])
 }
 
 model Pagamento {
-  id String @id @default(uuid())
-  id_empresa String
-  valor Decimal
-  metodo_pagamento MetodoPagamento
-  status_pagamento StatusPagamento
-  createAt DateTime @default(now())
-  upadateAt    DateTime
-  empresa Empresa @relation(fields: [id_empresa], references: [id])
-  @@index([ id_empresa])
-}
-
-model Servico {
-  id           String   @id @default(uuid())
-  id_empresa   String
-  titulo       String
-  descricao    String
-  preco        Decimal
-  createAt     DateTime @default(now())
-  updateAt     DateTime @updatedAt
-  empresa      Empresa  @relation(fields: [id_empresa], references: [id])
-
-  @@index([id_empresa])
-}
-
-
-enum MetodoPagamento {
-  VISA
-  TRASNFERENCIA_BANCARIA
-}
-
-enum StatusPagamento {
-  PAGO
-  NAO_PAGO
+  id         String   @id @default(uuid())
+  user_id    String?
+  empresa_id String?
+  valor      Decimal
+  midia      Midia[]
+  user       Users?   @relation(fields: [user_id], references: [id])
+  empresa    Empresa? @relation(fields: [empresa_id], references: [id])
+  createAt   DateTime @default(now())
+  upadateAt  DateTime @updatedAt
 }
 
 model Pontos {
-  id String @id @default(uuid())
-  id_user String
-  pontos Int
-  createAt DateTime @default(now())
-  upadateAt    DateTime
-  users Users @relation(fields: [id_user], references: [id])
-   @@index([id_user])
-}
-
-model Resgate {
-  id           String   @id @default(uuid())
-  user_id      String
-  recompensa_id String
+  id        String   @id @default(uuid())
+  userId    String
+  pontos    Int
   createAt  DateTime @default(now())
-  upadateAt    DateTime
-  user       Users      @relation(fields: [user_id], references: [id])
-  recompensa Recompensa @relation(fields: [recompensa_id], references: [id])
-
-  @@index([user_id])
-  @@index([recompensa_id])
-}
-
-
-model Recompensa {
-  id          String   @id @default(uuid())
-  nome        String
-  descricao   String
-  pontosNecessarios Int
-  resgates    Resgate[]
-}
-
-
-model Configuracao {
-  id        String    @id    @default(uuid())
-  acao      String
-  data_acao DateTime          @default(now())
-  id_user   String
-  user      Users             @relation(fields: [id_user], references: [id])
-  @@index([id_user])
+  upadateAt DateTime
+  users     Users    @relation(fields: [userId], references: [id])
 }
