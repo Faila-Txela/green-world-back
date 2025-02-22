@@ -31,8 +31,6 @@ model Users {
   pontos            Pontos[]
   Comentario        Comentario[]
   Pagamento         Pagamento[]
-
-  @@index([tipoUser_id])
 }
 
 model TipoUser {
@@ -92,8 +90,6 @@ model AmontoadoRelatado {
   relatoriocoleta RelatorioColeta[]
   midia           Midia[]
   Comentario      Comentario[]
-
-  @@index([user_id])
 }
 
 model Midia {
