@@ -1,4 +1,4 @@
-import { port, host, jwt_key } from './config/dotenv_config'
+import { port, host, jwt_key } from './modules/config/dotenv_config'
 import fastify, { FastifyInstance } from 'fastify'
 import cors from "@fastify/cors";
 import multipart from '@fastify/multipart'
