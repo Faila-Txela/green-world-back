@@ -24,32 +24,28 @@ model Users {
   amontoadorelatado AmontoadoRelatado[]
   notificacao       Notificacao[]
   relatoriocoleta   RelatorioColeta[]
-  tipouser          Tipouser            @relation(fields: [tipoUser_id], references: [id], map: "Users_tipoUser_id_fkey")
+  tipouser          Tipouser            @relation(fields: [tipoUser_id], references: [id])
   feedback          Feedback[]
   pontos            Pontos[]
   resgate           Resgate[]
   configuracao              Configuracao[]
 
-  @@index([tipoUser_id], map: "Users_tipoUser_id_fkey")
+  @@index([tipoUser_id])
 }
 
 model Tipouser {
   id       String            @id  @default(uuid())
-  tipoUser tipouser_tipoUser
+  empresa  Empresa[]
   users    Users[]
 }
-
-enum tipouser_tipoUser {
-  Empresas_de_Recolha @map("Empresa de Recolha")
-  Cidadao_Comum       @map("Cidadão Comum")
-}
-
 model Empresa {
   id String @id  @default(uuid())
   nomeEmpresa String 
+  tipoUser_id String
   emailEmpresa String @unique
   estadoEmpresa EstadoEmpresa
   localActuacao Amontoadorelatado_Localidade
+  user Tipouser  @relation(fields: [tipoUser_id], references: [id])
   pagamento Pagamento[]
   servico Servico[]
 }
