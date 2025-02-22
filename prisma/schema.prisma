@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Users {
-  id                String              @id  @default(uuid())
+  id                String              @id @default(uuid())
   nome              String
   email             String              @unique(map: "Users_email_key")
   senha             String
@@ -28,30 +28,31 @@ model Users {
   feedback          Feedback[]
   pontos            Pontos[]
   resgate           Resgate[]
-  configuracao              Configuracao[]
+  configuracao      Configuracao[]
 
   @@index([tipoUser_id])
 }
 
 model Tipouser {
-  id       String            @id  @default(uuid())
-  empresa  Empresa[]
-  users    Users[]
-}
-model Empresa {
-  id String @id  @default(uuid())
-  nomeEmpresa String 
-  tipoUser_id String
-  emailEmpresa String @unique
-  estadoEmpresa EstadoEmpresa
-  localActuacao Amontoadorelatado_Localidade
-  user Tipouser  @relation(fields: [tipoUser_id], references: [id])
-  pagamento Pagamento[]
-  servico Servico[]
+  id      String    @id @default(uuid())
+  empresa Empresa[]
+  users   Users[]
 }
 
-enum EstadoEmpresa{
-  PRIVADO  
+model Empresa {
+  id            String                       @id @default(uuid())
+  nomeEmpresa   String
+  tipoUser_id   String
+  emailEmpresa  String                       @unique
+  estadoEmpresa EstadoEmpresa
+  localActuacao Amontoadorelatado_Localidade
+  user          Tipouser                     @relation(fields: [tipoUser_id], references: [id])
+  pagamento     Pagamento[]
+  servico       Servico[]
+}
+
+enum EstadoEmpresa {
+  PRIVADO
   PUBLICO
 }
 
@@ -125,7 +126,7 @@ enum Amontoadorelatado_Status {
 }
 
 model Notificacao {
-  id       String   @id  @default(uuid())
+  id       String   @id @default(uuid())
   id_user  String
   titulo   String
   mensagem String
@@ -137,12 +138,13 @@ model Notificacao {
 }
 
 model Feedback {
-  id String @id @default(uuid())
-  id_user String
-  feedback String
-  createAt DateTime @default(now())
+  id           String       @id @default(uuid())
+  id_user      String
+  feedback     String
+  createAt     DateTime     @default(now())
   tipo_feedack TipoFeedback
-  user Users @relation(fields: [id_user], references: [id])
+  user         Users        @relation(fields: [id_user], references: [id])
+
   @@index([id_user])
 }
 
@@ -153,7 +155,7 @@ enum TipoFeedback {
 }
 
 model RelatorioColeta {
-  id               String                       @id  @default(uuid())
+  id                String                       @id @default(uuid())
   user_id           String
   amontoado_id      String
   dataColeta        DateTime                     @default(now())
@@ -166,30 +168,30 @@ model RelatorioColeta {
 }
 
 model Pagamento {
-  id String @id @default(uuid())
-  id_empresa String
-  valor Decimal
+  id               String          @id @default(uuid())
+  id_empresa       String
+  valor            Decimal
   metodo_pagamento MetodoPagamento
   status_pagamento StatusPagamento
-  createAt DateTime @default(now())
-  upadateAt    DateTime
-  empresa Empresa @relation(fields: [id_empresa], references: [id])
-  @@index([ id_empresa])
-}
-
-model Servico {
-  id           String   @id @default(uuid())
-  id_empresa   String
-  titulo       String
-  descricao    String
-  preco        Decimal
-  createAt     DateTime @default(now())
-  updateAt     DateTime @updatedAt
-  empresa      Empresa  @relation(fields: [id_empresa], references: [id])
+  createAt         DateTime        @default(now())
+  upadateAt        DateTime
+  empresa          Empresa         @relation(fields: [id_empresa], references: [id])
 
   @@index([id_empresa])
 }
 
+model Servico {
+  id         String   @id @default(uuid())
+  id_empresa String
+  titulo     String
+  descricao  String
+  preco      Decimal
+  createAt   DateTime @default(now())
+  updateAt   DateTime @updatedAt
+  empresa    Empresa  @relation(fields: [id_empresa], references: [id])
+
+  @@index([id_empresa])
+}
 
 enum MetodoPagamento {
   VISA
@@ -202,43 +204,43 @@ enum StatusPagamento {
 }
 
 model Pontos {
-  id String @id @default(uuid())
-  id_user String
-  pontos Int
-  createAt DateTime @default(now())
-  upadateAt    DateTime
-  users Users @relation(fields: [id_user], references: [id])
-   @@index([id_user])
+  id        String   @id @default(uuid())
+  id_user   String
+  pontos    Int
+  createAt  DateTime @default(now())
+  upadateAt DateTime
+  users     Users    @relation(fields: [id_user], references: [id])
+
+  @@index([id_user])
 }
 
 model Resgate {
-  id           String   @id @default(uuid())
-  user_id      String
+  id            String     @id @default(uuid())
+  user_id       String
   recompensa_id String
-  createAt  DateTime @default(now())
-  upadateAt    DateTime
-  user       Users      @relation(fields: [user_id], references: [id])
-  recompensa Recompensa @relation(fields: [recompensa_id], references: [id])
+  createAt      DateTime   @default(now())
+  upadateAt     DateTime
+  user          Users      @relation(fields: [user_id], references: [id])
+  recompensa    Recompensa @relation(fields: [recompensa_id], references: [id])
 
   @@index([user_id])
   @@index([recompensa_id])
 }
 
-
 model Recompensa {
-  id          String   @id @default(uuid())
-  nome        String
-  descricao   String
+  id                String    @id @default(uuid())
+  nome              String
+  descricao         String
   pontosNecessarios Int
-  resgates    Resgate[]
+  resgates          Resgate[]
 }
 
-
 model Configuracao {
-  id        String    @id    @default(uuid())
+  id        String   @id @default(uuid())
   acao      String
-  data_acao DateTime          @default(now())
+  data_acao DateTime @default(now())
   id_user   String
-  user      Users             @relation(fields: [id_user], references: [id])
+  user      Users    @relation(fields: [id_user], references: [id])
+
   @@index([id_user])
 }
