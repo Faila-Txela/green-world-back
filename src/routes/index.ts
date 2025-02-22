@@ -1,4 +1,6 @@
-import router from "./users";
-export function routes(){
-    router
+import { FastifyInstance } from "fastify";
+
+
+export default function Routes(fastify:FastifyInstance){
+    
 }
