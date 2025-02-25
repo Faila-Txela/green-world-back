@@ -22,7 +22,7 @@ const start = async () => {
         })
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
-            secret: jwt_key as string,
+            secret: jwt_key,
             cookieName: "SessionCookie",
             cookie: {
                 name: 'SessionCookie',
@@ -56,7 +56,7 @@ const start = async () => {
         });
         
         app.register(Routes);
-        app.listen({ port, host }, () => {
+        app.listen({ port:3001, host }, () => {
             console.log(`Server is running port ${port}`)
         })
     } catch (err) {
