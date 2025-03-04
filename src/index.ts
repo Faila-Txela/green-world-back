@@ -7,9 +7,13 @@ import fastifyStatic from '@fastify/static';
 import path from 'path';
 import Routes from './routes';
 
+
+  //Instanciando o Fastify (logger: true),simboliza que ele vai mostrar logs no console,facilitando a inspenção de erros.
 const app: FastifyInstance = fastify({
     logger: true
 })
+
+  //Configuração do servidor
 
 const start = async () => {
     try {
@@ -18,12 +22,12 @@ const start = async () => {
         })
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
-            secret: jwt_key as string,
+            secret: jwt_key,
             cookieName: "SessionCookie",
             cookie: {
                 name: 'SessionCookie',
                 path: '/',
-                secure: false, 
+                secure: false,   //Formato de desenvolvimento(https = produção)
                 httpOnly: true,
                 maxAge: 3600000,  
                   
@@ -31,11 +35,11 @@ const start = async () => {
             saveUninitialized: false,
             resave: false
         });
-        await app.register(cors, {
+        await app.register(cors, {   //Configuração do CORS (comunicação front e back)
             origin: ['http://localhost:5173', 'http://localhost:5174'],
             credentials: true
         });
-        app.register(multipart, {
+        app.register(multipart, {   //Habilitando o carregamento de arquivos no servidor
             limits: {
                 fieldNameSize: 100,
                 fieldSize: 100,
@@ -52,7 +56,7 @@ const start = async () => {
         });
         
         app.register(Routes);
-        app.listen({ port, host }, () => {
+        app.listen({ port:3001, host }, () => {
             console.log(`Server is running port ${port}`)
         })
     } catch (err) {
