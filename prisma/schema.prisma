@@ -165,6 +165,8 @@ model Comentario {
   userId              String
   amontoadoRelatadoId String
   conteudo            String
+  createAt            DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
   user                Users             @relation(fields: [userId], references: [id])
   amontoadoRelatado   AmontoadoRelatado @relation(fields: [amontoadoRelatadoId], references: [id])
 }
