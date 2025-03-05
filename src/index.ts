@@ -18,7 +18,7 @@ const app: FastifyInstance = fastify({
 const start = async () => {
     try {
         app.get("/", (req, res) => {
-            res.send("Hello World!");
+            res.send("Hello");
         })
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
