@@ -56,8 +56,9 @@ const start = async () => {
         });
         
         app.register(Routes);
+
         app.listen({ port:3001, host }, () => {
-            console.log(`Server is running port ${port}`)
+            console.log(`O servidor está rodando na porta ${port}`)
         })
     } catch (err) {
         console.log(err);
