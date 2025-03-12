@@ -41,7 +41,7 @@ class AuthService {
             }
             return res.code(200).send({message: 'Login feito com sucesso', data: user})
         } catch (error) {
-            return res.code(400).send({error})
+            return res.code(400).send({error: error})
         }
 
     }
