@@ -90,7 +90,7 @@
     "@fastify/forwarded" "^3.0.0"
     ipaddr.js "^2.1.0"
 
-"@fastify/secure-session@^8.1.0":
+"@fastify/secure-session@^8.1.1":
   version "8.1.1"
   resolved "https://registry.npmjs.org/@fastify/secure-session/-/secure-session-8.1.1.tgz"
   integrity sha512-JxdNd1sIo0Zm/n5x3j/2YW+H8OLXWkpGoLR4a32Ca7dnQpFCKJOKb3cj0N/vXj4REINmp44+ucev4SOA5zzpNQ==

@@ -40,10 +40,17 @@ Para seu sistema Green World, recomendo o Fastify pelos seguintes motivos:
 
 
 
+VARIÁVEIS DE AMBIENTES SÃO VARIÁVEIS AS FUNDAMENTAIS PARA O FUNCIONAMENTO DE UM SISTEMA,
 
- ## Nodejs and his components
+Midllewares 
 
-  # O try...catch serve para capturar erros e evitar que o servidor quebre.
+Response Status Code
+
+
+
+## Nodejs and his components
+
+# O try...catch serve para capturar erros e evitar que o servidor quebre.
 
 
 
