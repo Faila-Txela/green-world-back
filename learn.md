@@ -40,6 +40,13 @@ Para seu sistema Green World, recomendo o Fastify pelos seguintes motivos:
 
 
 
+VARIÁVEIS DE AMBIENTES SÃO VARIÁVEIS AS FUNDAMENTAIS PARA O FUNCIONAMENTO DE UM SISTEMA,
+
+Midllewares 
+
+Response Status Code
+
+
 
  ## Nodejs and his components
 
