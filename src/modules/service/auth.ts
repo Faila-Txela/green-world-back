@@ -5,7 +5,7 @@ import { Users } from '@prisma/client'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { userValidation } from '../validations/user'
-import { userModel } from '../models/user'
+import { userModel } from '../models/usuario'
 import { hashService } from './hash'
 import { data } from 'react-router-dom'
 

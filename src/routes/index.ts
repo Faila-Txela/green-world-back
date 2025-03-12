@@ -6,12 +6,10 @@ import { notificacao } from "./notificacao.routes";
 import { feedback } from "./feedback.routes";
 import { comentario } from "./comentario.routes";
 import { pontos } from "./pontos.routes";
-import UserRoutes from "./user.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
 
 export default async function Routes(fastify: FastifyInstance){
-    await UserRoutes(fastify)
     await tipoEmpresa(fastify);
     await tipoUser(fastify);
     await provincia(fastify);
