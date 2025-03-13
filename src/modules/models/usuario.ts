@@ -1,11 +1,11 @@
-import { TipoUser, Users } from "@prisma/client";
+import { Users } from "@prisma/client";
 import { BaseModel } from "./base";
 import prisma from "../lib/prisma";
 
 class UserModel extends BaseModel<Users> {
     protected users = prisma.users
     model = prisma.users;
-    include = {}
+    include = {tipoUser: true}
     async getByEmail(email: string){
         return await this.users.findFirst({
             where:{
@@ -15,4 +15,5 @@ class UserModel extends BaseModel<Users> {
     }
 }
 
-export const userModel = new UserModel()
+
+export const userModel = new UserModel();
