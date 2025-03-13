@@ -19,7 +19,7 @@ const app: FastifyInstance = fastify({
 const start = async () => {
     try {
         app.get("/", (req, res) => {
-            res.send(feedback);
+            res.send("Olá mundo");
         })
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
@@ -37,7 +37,7 @@ const start = async () => {
             resave: false
         });
         await app.register(cors, {   //Configuração do CORS (comunicação front e back)
-            origin: ['http://localhost:5173', 'http://localhost:5174'],
+            origin: ['http://localhost:5173'],
             credentials: true
         });
         app.register(multipart, {   //Habilitando o carregamento de arquivos no servidor

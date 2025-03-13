@@ -19,7 +19,7 @@ model Users {
   email             String              @unique()
   senha             String
   tipoUser_id       String
-  iban              String
+  iban              String 
   nome_titular      String
   createAt          DateTime            @default(now())
   updateAt          DateTime            @updatedAt
