@@ -7,7 +7,6 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { userValidation } from '../validations/user'
 import { userModel } from '../models/usuario'
 import { hashService } from './hash'
-import { data } from 'react-router-dom'
 
 declare module '@fastify/secure-session'{
     interface SessionData{

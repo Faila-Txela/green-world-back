@@ -3,7 +3,7 @@ import z from "zod";
 class UserValidation {
     getByLogin = z.object({
         email: z.string().email(),
-        senha: z.string().min(8)
+        senha: z.string().min(3)
     })
 }
 
