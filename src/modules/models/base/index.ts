@@ -7,7 +7,7 @@
     // Propriedade opcional para definir relações que devem ser incluídas nas consultas.
 
     async create(
-      data: Omit<T, "id" | "created_at" | "updated_at">
+      data: Omit<T, "id" | "createdAt" | "updatedAt">
     ): Promise<T | {}> {
       return await this.model.create({ data });
     }

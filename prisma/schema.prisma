@@ -21,8 +21,8 @@ model Users {
   tipoUser_id       String
   iban              String
   nome_titular      String
-  createAt          DateTime            @default(now())
-  updateAt          DateTime            @updatedAt
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   amontoadorelatado AmontoadoRelatado[]
   notificacao       Notificacao[]
   relatoriocoleta   RelatorioColeta[]
