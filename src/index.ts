@@ -6,8 +6,6 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyStatic from '@fastify/static';
 import path from 'path';
 import Routes from './routes';
-import { feedback } from './routes/feedback.routes';
-
 
   //Instanciando o Fastify (logger: true),simboliza que ele vai mostrar logs no console,facilitando a inspenção de erros.
 const app: FastifyInstance = fastify({
@@ -15,12 +13,8 @@ const app: FastifyInstance = fastify({
 })
 
   //Configuração do servidor
-
 const start = async () => {
     try {
-        app.get("/", (req, res) => {
-            res.send("Olá mundo");
-        })
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
             secret: jwt_key as string,
