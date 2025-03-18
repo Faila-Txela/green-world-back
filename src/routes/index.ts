@@ -8,7 +8,7 @@ import { comentario } from "./comentario.routes";
 import { pontos } from "./pontos.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
-import { authService } from "../modules/service/auth";
+import { amontoado_relatado } from "./amontoado_relatado.routes";
 
 export default async function Routes(fastify: FastifyInstance){
     await tipoEmpresa(fastify);
