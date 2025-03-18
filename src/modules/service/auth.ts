@@ -25,8 +25,8 @@ class AuthService {
         const token = jwt.sign(user, jwt_key as string, {
             expiresIn: Number(jwt_expires),
         });
-        req.session.token = token;
-        console.log("Token gerado:", token);
+         req.session.token = token;
+         console.log("Token gerado:", token);
     };
 
     async login(req: FastifyRequest, res: FastifyReply) {
@@ -40,7 +40,7 @@ class AuthService {
             if (!verifyPassword) {
                 return res.code(401).send({ error: 'Usuário ou Senha inválida' });
             }
-            //await this.generateToken(user, req)
+            // await this.generateToken(user, req)
             return res.code(200).send({ message: 'Login feito com sucesso', data: user });
         } catch (error: any) {
             console.error('Erro ao tentar fazer login:', error);
