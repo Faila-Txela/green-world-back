@@ -9,9 +9,9 @@ import { pontos } from "./pontos.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
 import { authService } from "../modules/service/auth";
+import { tipoUserService } from "../modules/service/tipo_user";
 
 export default async function Routes(fastify: FastifyInstance){
-    //fastify.post('/login', authService.login);
     await tipoEmpresa(fastify);
     await tipoUser(fastify);
     await provincia(fastify);
