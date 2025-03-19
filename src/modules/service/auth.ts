@@ -34,27 +34,27 @@ class AuthService {
             const { email, senha } = userValidation.getByLogin.parse(req.body);
             const user = await userModel.getByEmail(email);
             if (!user) {
-                return res.code(401).send({ error: 'Usuário não encontrado' });
+                return res.status(401).send({ error: 'Usuário não encontrado' });
             }
             const verifyPassword = await hashService.compare(senha, user.senha);
             if (!verifyPassword) {
-                return res.code(401).send({ error: 'Usuário ou Senha inválida' });
+                return res.status(401).send({ error: 'Usuário ou Senha inválida' });
             }
             // await this.generateToken(user, req)
-            return res.code(200).send({ message: 'Login feito com sucesso', data: user });
+            return res.status(200).send({ message: 'Login feito com sucesso', data: user });
         } catch (error: any) {
             console.error('Erro ao tentar fazer login:', error);
-            return res.code(400).send({ error: 'Erro no processo de login' });
+            return res.status(400).send({ error: 'Erro no processo de login' });
         }
     }
 
     async getData(req: FastifyRequest, res: FastifyReply) {
         try {
             const data = req.data as Users;
-            return res.code(200).send(data);
+            return res.status(200).send(data);
         } catch (error: any) {
             console.error('Erro ao buscar dados do usuário:', error);
-            return res.code(500).send({ error: 'Erro ao buscar dados do usuário' });
+            return res.status(500).send({ error: 'Erro ao buscar dados do usuário' });
         }
     }
 
@@ -62,16 +62,16 @@ class AuthService {
         try {
             const token = req.session.token;
             if (!token) {
-                return res.code(403).send({ error: 'Token não fornecido' });
+                return res.status(403).send({ error: 'Token não fornecido' });
             }
             const user = jwt.verify(token, jwt_key as string) as JwtPayload;
             if (!user) {
-                return res.code(403).send({ error: 'Token inválido ou expirado' });
+                return res.status(403).send({ error: 'Token inválido ou expirado' });
             }
             req.data = user;
         } catch (error: any) {
             console.log('Erro ao tentar fazer a autenticação', error);
-            return res.code(403).send({ error: 'Erro ao autenticar o usuário' });
+            return res.status(403).send({ error: 'Erro ao autenticar o usuário' });
         }
     }
 
@@ -80,7 +80,7 @@ class AuthService {
         res.clearCookie('SessionCookie', {
             path: '/',
         });
-        return res.code(200).send({ message: 'Logout feito com sucesso' });
+        return res.status(200).send({ message: 'Logout feito com sucesso' });
     }
 }
 
