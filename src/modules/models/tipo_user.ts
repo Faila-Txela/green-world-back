@@ -10,7 +10,7 @@ class TipoUserModel extends BaseModel<TipoUser> {
     getIdByDefault = async () => {
         return this.tipoUser.findFirst({
             where: {
-                nome: "USER"
+                nome: "CIDADAO_COMUM"
             },
             select: {
                 id: true

@@ -10,6 +10,7 @@ import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
 import { authService } from "../modules/service/auth";
 import { tipoUserService } from "../modules/service/tipo_user";
+import { address } from "./address.routes";
 
 export default async function Routes(fastify: FastifyInstance){
     await tipoEmpresa(fastify);
@@ -21,4 +22,5 @@ export default async function Routes(fastify: FastifyInstance){
     await pontos(fastify);
     await usuarios(fastify);
     await empresas(fastify);
+    await address(fastify);
 }

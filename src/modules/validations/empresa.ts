@@ -7,6 +7,7 @@ class EmpresaValidatoin {
        tipoEmpresa_id: z.string().uuid(),
        email: z.string().email(),
        nif: z.string(),
+       senha: z.string()
     })
 
     getDataToUpdate = this.getData.partial();
