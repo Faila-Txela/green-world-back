@@ -28,6 +28,7 @@ model Users {
   relatoriocoleta   RelatorioColeta[]
   tipoUser          TipoUser            @relation(fields: [tipoUser_id], references: [id])
   feedback          Feedback[]
+  contactos         Contactos[]         
   pontos            Pontos[]
   Comentario        Comentario[]
   Pagamento         Pagamento[]
@@ -127,17 +128,8 @@ model Municipio {
   Endereco    Endereco[]
 }
 
-enum Categoria {
-  ORGANICO
-  RECICLAVEL
-  PERIGOSO
-  ELECTRONICO
-  OUTROS
-}
-
 enum Prioridade {
   BAIXA
-  MEDIA
   ALTA
 }
 
@@ -198,6 +190,17 @@ model Pontos {
   userId    String
   pontos    Int
   createAt  DateTime @default(now())
-  upadateAt DateTime
+  upadateAt DateTime @updatedAt
+  user      Users    @relation(fields: [userId], references: [id])
+}
+
+model Contactos {
+  id        String   @id @default(uuid())
+  nome      String
+  mensagem  String
+  userId    String
+  email     String
+  createAt  DateTime @default(now())
+  upadateAt DateTime @updatedAt
   users     Users    @relation(fields: [userId], references: [id])
 }
