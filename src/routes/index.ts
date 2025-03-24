@@ -12,11 +12,13 @@ import contactos from "./contactos.routes";
 import { authService } from "../modules/service/auth";
 import { tipoUserService } from "../modules/service/tipo_user";
 import { address } from "./address.routes";
+import { municipio } from "./municipio.routes";
 
 export default async function Routes(fastify: FastifyInstance){
     await tipoEmpresa(fastify);
     await tipoUser(fastify);
     await provincia(fastify);
+    await municipio(fastify);
     await notificacao(fastify);
     await feedback(fastify);
     await comentario(fastify);

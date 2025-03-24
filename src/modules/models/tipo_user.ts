@@ -17,6 +17,16 @@ class TipoUserModel extends BaseModel<TipoUser> {
             }
         });
     }
+    getIdByDefaultEmpresa = async () => {
+        return this.tipoUser.findFirst({
+            where: {
+                nome: "EMPRESA"
+            },
+            select: {
+                id: true
+            }
+        });
+    }
 } 
 
 export const tipoUserModel = new TipoUserModel()

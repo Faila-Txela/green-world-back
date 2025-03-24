@@ -17,9 +17,9 @@ class UsuarioService extends BaseService {
             const user = await userModel.create({ email, iban, nome, nome_titular, senha: hashSenha, tipoUser_id });
             console.log("Senha", hashSenha);
             return res.status(201).send(user);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            return res.status(400).send({ message: "Erro ao criar usuário" });
+            return res.status(400).send({ message: error });
         }
     }
 }
