@@ -54,12 +54,6 @@ Response Status Code
 
 
 
-
-
-
-
-
-
   ## SQL
 
  # Inner join da tabela Users
@@ -109,3 +103,77 @@ FROM Pagamento p
 LEFT JOIN Users u ON p.user_id = u.id
 LEFT JOIN Empresa e ON p.empresa_id = e.id;
 
+
+
+
+
+
+
+   # Contact us #
+
+import { Contactos } from "@prisma/client";
+import { BaseModel } from "./base";
+import prisma from "../lib/prisma";
+
+// Extende o BaseModel para o modelo Contacto
+class ContactoModel extends BaseModel<Contactos> {
+  model = prisma.contactos;
+  include = {};
+
+  // Método para criar um contacto
+  async criarContacto(data: Omit<Contactos, "id">): Promise<Contactos> {
+    try {
+      return await this.model.create({
+        data,
+      });
+    } catch (error) {
+      throw new Error("Erro ao criar contacto: " + error.message);
+    }
+  }
+
+  // Método para listar todos os contactos
+  async listarContactos(): Promise<Contactos[]> {
+    try {
+      return await this.model.findMany();
+    } catch (error) {
+      throw new Error("Erro ao listar contactos: " + error.message);
+    }
+  }
+
+  // Método para encontrar um contacto por ID
+  async encontrarContactoPorId(id: number): Promise<Contactos | null> {
+    try {
+      return await this.model.findUnique({
+        where: { id },
+      });
+    } catch (error) {
+      throw new Error("Erro ao encontrar contacto: " + error.message);
+    }
+  }
+
+  // Método para atualizar um contacto
+  async atualizarContacto(id: number, data: Partial<Contactos>): Promise<Contactos> {
+    try {
+      return await this.model.update({
+        where: { id },
+        data,
+      });
+    } catch (error) {
+      throw new Error("Erro ao atualizar contacto: " + error.message);
+    }
+  }
+
+  // Método para excluir um contacto
+  async excluirContacto(id: number): Promise<Contactos> {
+    try {
+      return await this.model.delete({
+        where: { id },
+      });
+    } catch (error) {
+      throw new Error("Erro ao excluir contacto: " + error.message);
+    }
+  }
+}
+
+// Instanciando o modelo de contactos
+export const contactoModel = new ContactoModel();

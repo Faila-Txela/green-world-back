@@ -8,4 +8,3 @@ import prisma from "../lib/prisma";
   }
 
 export const contactoModel = new ContactoModel();
-

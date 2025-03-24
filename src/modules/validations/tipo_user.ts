@@ -1,6 +1,6 @@
 import z from "zod";
 
-class TipoUserValidatoin {
+class TipoUserValidation {
     getData = z.object({
        nome: z.string()
     })
@@ -8,4 +8,4 @@ class TipoUserValidatoin {
     getDataToUpdate = this.getData.partial()
 }
 
-export const tipoUserValidations = new TipoUserValidatoin();
+export const tipoUserValidations = new TipoUserValidation();
