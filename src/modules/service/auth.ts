@@ -1,12 +1,9 @@
 import { jwt_expires, jwt_key } from './../config/dotenv_config';
 import 'fastify';
 import '@fastify/secure-session';
-import { Users } from '@prisma/client';
+import { Users, Empresa } from '@prisma/client';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { userValidation } from '../validations/user';
-import { userModel } from '../models/usuario';
-import { hashService } from './hash';
 
 declare module '@fastify/secure-session' {
     interface SessionData {
@@ -16,36 +13,21 @@ declare module '@fastify/secure-session' {
 
 declare module 'fastify' {
     interface FastifyRequest {
-        data?: Users | JwtPayload;
+        data?: Users | JwtPayload | Empresa;
     }
 }
 
 class AuthService {
-    async generateToken(user: Users, req: FastifyRequest) {
-        const token = jwt.sign(user, jwt_key as string, {
+
+    async generateToken(user: Users | Empresa) {
+        return jwt.sign(user, jwt_key as string, {
             expiresIn: Number(jwt_expires),
         });
-         req.session.token = token;
-         console.log("Token gerado:", token);
     };
 
-    async login(req: FastifyRequest, res: FastifyReply) {
-        try {
-            const { email, senha } = userValidation.getByLogin.parse(req.body);
-            const user = await userModel.getByEmail(email);
-            if (!user) {
-                return res.status(401).send({ error: 'Usuário não encontrado' });
-            }
-            const verifyPassword = await hashService.compare(senha, user.senha);
-            if (!verifyPassword) {
-                return res.status(401).send({ error: 'Usuário ou Senha inválida' });
-            }
-            // await this.generateToken(user, req)
-            return res.status(200).send({ message: 'Login feito com sucesso', data: user });
-        } catch (error: any) {
-            console.error('Erro ao tentar fazer login:', error);
-            return res.status(400).send({ error: 'Erro no processo de login' });
-        }
+    async login(user: Users| Empresa, req: FastifyRequest) {
+        const token = await this.generateToken(user)
+        req.session.token = token;
     }
 
     async getData(req: FastifyRequest, res: FastifyReply) {
@@ -53,7 +35,6 @@ class AuthService {
             const data = req.data as Users;
             return res.status(200).send(data);
         } catch (error: any) {
-            console.error('Erro ao buscar dados do usuário:', error);
             return res.status(500).send({ error: 'Erro ao buscar dados do usuário' });
         }
     }

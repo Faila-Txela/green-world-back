@@ -9,8 +9,6 @@ import { pontos } from "./pontos.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
 import contactos from "./contactos.routes";
-import { authService } from "../modules/service/auth";
-import { tipoUserService } from "../modules/service/tipo_user";
 import { address } from "./address.routes";
 import { municipio } from "./municipio.routes";
 

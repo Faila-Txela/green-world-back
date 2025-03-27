@@ -67,7 +67,6 @@ model Empresa {
 model Endereco {
   id          String    @id @default(uuid())
   telefone    String
-  rua         String
   bairro      String
   provinciaId String
   municipioId String

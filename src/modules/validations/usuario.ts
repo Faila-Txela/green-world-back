@@ -11,6 +11,11 @@ class UserValidatoin {
     })
 
     getDataToUpdate = this.getData.partial();
+
+    getByLogin = z.object({
+        email: z.string().email(),
+        senha: z.string().min(3)
+    })
 }
 
 export const userValidations = new UserValidatoin();

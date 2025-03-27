@@ -4,4 +4,5 @@ import { empresaService } from "../modules/service/empresa";
 
 export async function empresas(app: FastifyInstance) {
     await BaseRoute.handle(app, empresaService, 'empresas');
+    app.post('/empresas/login', empresaService.login)
 }

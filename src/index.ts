@@ -31,7 +31,7 @@ const start = async () => {
             resave: false
         });
         await app.register(cors, {   //Configuração do CORS (comunicação front e back)
-            origin: ['http://localhost:5173'],
+            origin: ['http://localhost:5173', 'http://localhost:5174'],
             credentials: true
         });
         app.register(multipart, {   //Habilitando o carregamento de arquivos no servidor
