@@ -75,12 +75,6 @@ model Endereco {
   Empresa     Empresa[]
 }
 
-enum EstadoEmpresa {
-  PRIVADO
-  PUBLICO
-  MISTAS
-}
-
 model AmontoadoRelatado {
   id              String            @id @default(uuid())
   user_id         String
@@ -93,6 +87,7 @@ model AmontoadoRelatado {
   relatoriocoleta RelatorioColeta[]
   midia           Midia[]
   Comentario      Comentario[]
+  prioridade      Prioridade
 
   @@index([user_id])
 }
