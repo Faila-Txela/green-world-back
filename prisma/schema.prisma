@@ -91,7 +91,6 @@ model AmontoadoRelatado {
 
   @@index([user_id])
 }
-
 model Midia {
   id                  String             @id @default(uuid())
   caminho             String
