@@ -8,7 +8,7 @@ import { comentario } from "./comentario.routes";
 import { pontos } from "./pontos.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
-import contactos from "./contactos.routes";
+import contactos from "./contact.routes";
 import { address } from "./address.routes";
 import { municipio } from "./municipio.routes";
 
