@@ -1,6 +1,6 @@
 import z from "zod";
 
-class EnderecoValidatoin {
+class EnderecoValidation {
     getData = z.object({
         telefone: z.string(),
         bairro: z.string(),
@@ -15,4 +15,4 @@ class EnderecoValidatoin {
     })
 }
 
-export const enderecoValidations = new EnderecoValidatoin();
+export const enderecoValidations = new EnderecoValidation();

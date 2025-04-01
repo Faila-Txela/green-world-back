@@ -1,6 +1,6 @@
 import z from "zod"
 
-class NotificacaoValidatoin {
+class NotificacaoValidation {
     getData = z.object({
         userId: z.string().uuid(),
         titulo: z.string().nonempty(),
@@ -10,4 +10,4 @@ class NotificacaoValidatoin {
     getDataToUpdate = this.getData.partial();
 }
 
-export const notificacaoValidations = new NotificacaoValidatoin();
+export const notificacaoValidations = new NotificacaoValidation();

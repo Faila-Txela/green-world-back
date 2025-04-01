@@ -7,4 +7,4 @@ class AmontoadoRelatadoModel extends BaseModel<AmontoadoRelatado> {
     include = {}
 }
 
-export const amontuadoRelatadoModel = new AmontoadoRelatadoModel();
+export const amontoadoRelatadoModel = new AmontoadoRelatadoModel();

@@ -1,6 +1,6 @@
 import z from "zod"
 
-class ProvinciaValidatoin {
+class ProvinciaValidation {
     getData = z.object({
        nome: z.string()
     })
@@ -8,4 +8,4 @@ class ProvinciaValidatoin {
     getDataToUpdate = this.getData.partial();
 }
 
-export const provinciaValidations = new ProvinciaValidatoin();
+export const provinciaValidations = new ProvinciaValidation();

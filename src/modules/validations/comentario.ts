@@ -1,6 +1,6 @@
 import z from "zod"
 
-class ComentarioValidatoin {
+class ComentarioValidation {
     getData = z.object({
         userId: z.string().uuid(),
         amontoadoRelatadoId: z.string().uuid(),
@@ -10,4 +10,4 @@ class ComentarioValidatoin {
     getDataToUpdate = this.getData.partial();
 }
 
-export const comentarioValidations = new ComentarioValidatoin();
+export const comentarioValidations = new ComentarioValidation();

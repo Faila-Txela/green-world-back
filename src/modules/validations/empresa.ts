@@ -1,6 +1,6 @@
 import z from "zod"
 
-class EmpresaValidatoin {
+class EmpresaValidation {
     getData = z.object({
         nome: z.string(),
         enderecoId: z.string().uuid(),
@@ -19,4 +19,4 @@ class EmpresaValidatoin {
     })
 }
 
-export const empresaValidations = new EmpresaValidatoin();
+export const empresaValidations = new EmpresaValidation();

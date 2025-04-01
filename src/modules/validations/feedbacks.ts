@@ -1,6 +1,6 @@
 import z from "zod"
 
-class FeedbackValidatoin {
+class FeedbackValidation {
     getData = z.object({
         userId: z.string().uuid(),
         feedback: z.string().nonempty(),
@@ -9,4 +9,5 @@ class FeedbackValidatoin {
     getDataToUpdate = this.getData.partial();
 }
 
-export const feedbackValidations = new FeedbackValidatoin();
+export const feedbackValidations = new FeedbackValidation();
+

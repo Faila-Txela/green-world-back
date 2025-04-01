@@ -1,6 +1,6 @@
 import z from "zod"
 
-class PontosValidatoin {
+class PontosValidation {
     getData = z.object({
         userId: z.string().uuid(),
         pontos: z.number()
@@ -9,4 +9,4 @@ class PontosValidatoin {
     getDataToUpdate = this.getData.partial();
 }
 
-export const pontosValidations = new PontosValidatoin();
+export const pontosValidations = new PontosValidation();

@@ -1,6 +1,6 @@
 import z from "zod"
 
-class UserValidatoin {
+class UserValidation {
     getData = z.object({
        nome: z.string(),
        email: z.string().email(),
@@ -18,4 +18,4 @@ class UserValidatoin {
     })
 }
 
-export const userValidations = new UserValidatoin();
+export const userValidations = new UserValidation();

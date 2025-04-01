@@ -1,6 +1,8 @@
+// Aqui a validação será diferente,porque terei que validar as imagens e os textos enviados.
+
 import z from "zod"
 
-class AmontoadoRelatadoValidatoin {
+class AmontoadoRelatadoValidation{
     getData = z.object({
         userId: z.string().uuid(),
         descricao: z.string(),
@@ -11,4 +13,4 @@ class AmontoadoRelatadoValidatoin {
     getDataToUpdate = this.getData.partial();
 }
 
-export const amontoadoRelatadoValidatoins = new AmontoadoRelatadoValidatoin();
+export const amontoadoRelatadoValidations = new AmontoadoRelatadoValidation();
