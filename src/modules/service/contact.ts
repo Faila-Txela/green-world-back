@@ -8,18 +8,17 @@ class ContactoService extends BaseService {
     createValidationSchema = contactoValidation.getData;
     updateValidationSchema = contactoValidation.getDataToUpdate;
 
-    async create(req: FastifyRequest, res: FastifyReply) {
-        try {
-            
-        const { nome, mensagem, userId, email } = contactoValidation.getData.parse(req.body)
-        const contacto = await contactoModel.create({ nome, mensagem, userId, email });
-        return res.status(201).send(contacto);
+    // async create(req: FastifyRequest, res: FastifyReply) {
+    //     try {
+    //     const { nome, mensagem, userId, email } = contactoValidation.getData.parse(req.body)
+    //     const contacto = await contactoModel.create({ nome, mensagem, userId, email });
+    //     return res.status(201).send();
 
-        } catch (error) {
-            console.error(error);
-            return res.status(400).send({ message: error });
-        }
-    }
+    //     } catch (error) {
+    //         console.error(error);
+    //         return res.status(400).send({ message: error });
+    //     }
+    // }
 
 }
 
