@@ -28,7 +28,7 @@ model Users {
   relatoriocoleta   RelatorioColeta[]
   tipoUser          TipoUser            @relation(fields: [tipoUser_id], references: [id])
   feedback          Feedback[]
-  contactos         Contactos[]         
+  contactos         Contactos[]
   pontos            Pontos[]
   Comentario        Comentario[]
   Pagamento         Pagamento[]
@@ -49,18 +49,18 @@ model TipoEmpresa {
 }
 
 model Empresa {
-  id             String        @id @default(uuid())
+  id             String      @id @default(uuid())
   nome           String
   enderecoId     String
   tipoEmpresa_id String
-  email          String        @unique
+  email          String      @unique
   nif            String
   senha          String
   site           String
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  endereco       Endereco      @relation(fields: [enderecoId], references: [id])
-  tipo_emprea    TipoEmpresa   @relation(fields: [tipoEmpresa_id], references: [id])
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  endereco       Endereco    @relation(fields: [enderecoId], references: [id])
+  tipo_emprea    TipoEmpresa @relation(fields: [tipoEmpresa_id], references: [id])
   pagamento      Pagamento[]
 }
 
@@ -83,6 +83,10 @@ model AmontoadoRelatado {
   longitude       Decimal
   createAt        DateTime          @default(now())
   updateAt        DateTime          @updatedAt
+  provinciaId     String
+  provincia       Provincia         @relation(fields: [provinciaId], references: [id])
+  municipioId     String
+  municipio       Municipio         @relation(fields: [municipioId], references: [id])
   users           Users             @relation(fields: [user_id], references: [id])
   relatoriocoleta RelatorioColeta[]
   midia           Midia[]
@@ -91,6 +95,7 @@ model AmontoadoRelatado {
 
   @@index([user_id])
 }
+
 model Midia {
   id                  String             @id @default(uuid())
   caminho             String
@@ -108,18 +113,20 @@ enum StatusColeta {
 }
 
 model Provincia {
-  id         String      @id @default(uuid())
-  nome       String
-  municipios Municipio[]
-  Endereco   Endereco[]
+  id                String              @id @default(uuid())
+  nome              String
+  municipios        Municipio[]
+  Endereco          Endereco[]
+  AmontoadoRelatado AmontoadoRelatado[]
 }
 
 model Municipio {
-  id          String     @id @default(uuid())
-  provinciaId String
-  nome        String
-  provincia   Provincia  @relation(fields: [provinciaId], references: [id])
-  Endereco    Endereco[]
+  id                String              @id @default(uuid())
+  provinciaId       String
+  nome              String
+  provincia         Provincia           @relation(fields: [provinciaId], references: [id])
+  Endereco          Endereco[]
+  AmontoadoRelatado AmontoadoRelatado[]
 }
 
 enum Prioridade {
