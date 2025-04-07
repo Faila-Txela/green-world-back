@@ -20,6 +20,20 @@ class AmontoadoRelatadoService extends BaseService {
     //     }
     // }
 
+    // await novu.trigger('notifier-project', {
+    //     to: {
+    //       subscriberId: empresa.id, // ou o id da empresa
+    //       email: empresa.email // opcional
+    //     },
+    //     payload: {
+    //       // Qualquer dado que você quiser exibir na notificação
+    //       titulo: 'Novo relato recebido',
+    //       descricao: 'Um novo relato foi enviado no seu ponto de coleta.',
+    //       data: new Date().toLocaleString(),
+    //     }
+    //  });
+      
+
 }
 
 export const amontoadoRelatadoService = new AmontoadoRelatadoService();

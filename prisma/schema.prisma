@@ -81,6 +81,7 @@ model AmontoadoRelatado {
   descricao       String
   latitude        Decimal
   longitude       Decimal
+  bairro          String
   createAt        DateTime          @default(now())
   updateAt        DateTime          @updatedAt
   provinciaId     String
