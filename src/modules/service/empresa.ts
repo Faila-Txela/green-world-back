@@ -4,7 +4,6 @@ import { empresaValidations } from "../validations/empresa";
 import { BaseService } from "./base";
 import { hashService } from "./hash";
 import { authService } from "./auth";
-import { Empresa } from "@prisma/client";
 
 class EmpresaService extends BaseService {
     model = empresaModel;

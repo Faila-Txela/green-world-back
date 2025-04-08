@@ -23,10 +23,6 @@ class AmontoadoRelatadoValidation {
     .string()
     .min(20, "O bairro deve ter no mínimo 20 carateres.")
     .max(25, "O bairro deve ter no máximo 25 caracteres."),
-    imagens: z
-      .array(z.string().url())
-      .min(1, "Pelo menos uma imagem deve ser enviada.")
-     // .max(5, "Você pode enviar no máximo 5 imagens."),
   });
 
   getDataToUpdate = this.getData.partial();
