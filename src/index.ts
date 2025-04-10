@@ -6,15 +6,17 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyStatic from '@fastify/static';
 import path from 'path';
 import Routes from './routes';
+import { ensureUploadDirectoryExists } from './utils/ensureUploadDirectoryExists'
 
   //Instanciando o Fastify (logger: true),simboliza que ele vai mostrar logs no console,facilitando a inspenção de erros.
 const app: FastifyInstance = fastify({
     logger: true
 })
-
   //Configuração do servidor
 const start = async () => {
     try {
+        ensureUploadDirectoryExists();
+
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
             secret: jwt_key as string,

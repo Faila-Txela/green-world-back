@@ -3,13 +3,14 @@
   "_version": "22.0.0",
 
   "compilerOptions": {
-    "lib": ["es2023"],
+    "lib": ["ES2022"],
     "module": "node16",
     "target": "es2022",
 
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "node16"
+    "moduleResolution": "node16",
+    "forceConsistentCasingInFileNames": true
   }
 }
