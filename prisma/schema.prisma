@@ -30,7 +30,6 @@ model Users {
   feedback          Feedback[]
   contactos         Contactos[]
   pontos            Pontos[]
-  Comentario        Comentario[]
   Pagamento         Pagamento[]
 
   @@index([tipoUser_id])
@@ -49,19 +48,21 @@ model TipoEmpresa {
 }
 
 model Empresa {
-  id             String      @id @default(uuid())
+  id             String        @id @default(uuid())
   nome           String
   enderecoId     String
   tipoEmpresa_id String
-  email          String      @unique
+  email          String        @unique
   nif            String
   senha          String
   site           String
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-  endereco       Endereco    @relation(fields: [enderecoId], references: [id])
-  tipo_emprea    TipoEmpresa @relation(fields: [tipoEmpresa_id], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  endereco       Endereco      @relation(fields: [enderecoId], references: [id])
+  tipo_emprea    TipoEmpresa   @relation(fields: [tipoEmpresa_id], references: [id])
   pagamento      Pagamento[]
+  agenda         Agenda[]
+  notificacao    Notificacao[]
 }
 
 model Endereco {
@@ -91,7 +92,6 @@ model AmontoadoRelatado {
   users           Users             @relation(fields: [user_id], references: [id])
   relatoriocoleta RelatorioColeta[]
   midia           Midia[]
-  Comentario      Comentario[]
   prioridade      Prioridade
 
   @@index([user_id])
@@ -136,13 +136,26 @@ enum Prioridade {
 }
 
 model Notificacao {
-  id       String   @id @default(uuid())
-  userId   String
-  titulo   String
-  mensagem String
-  createAt DateTime @default(now())
-  updateAt DateTime
-  users    Users    @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String?
+  empresaId String?
+  titulo    String
+  mensagem  String
+  createAt  DateTime @default(now())
+  updateAt  DateTime
+  empresa   Empresa? @relation(fields: [empresaId], references: [id])
+  users     Users?   @relation(fields: [userId], references: [id])
+}
+
+model Agenda {
+  id         String   @id @default(uuid())
+  empresaId  String
+  start_time DateTime
+  end_time   DateTime
+  contexto   String
+  createAt   DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  empresa    Empresa  @relation(fields: [empresaId], references: [id])
 }
 
 model Feedback {
@@ -152,17 +165,6 @@ model Feedback {
   createAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      Users    @relation(fields: [userId], references: [id])
-}
-
-model Comentario {
-  id                  String            @id @default(uuid())
-  userId              String
-  amontoadoRelatadoId String
-  conteudo            String
-  createAt            DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-  user                Users             @relation(fields: [userId], references: [id])
-  amontoadoRelatado   AmontoadoRelatado @relation(fields: [amontoadoRelatadoId], references: [id])
 }
 
 model RelatorioColeta {

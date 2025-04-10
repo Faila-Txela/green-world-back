@@ -7,6 +7,10 @@ class NotificacaoValidation {
         mensagem: z.string(), 
     })
 
+    getParams = z.object({
+        id: z.string().uuid()
+    })
+
     getDataToUpdate = this.getData.partial();
 }
 

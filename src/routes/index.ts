@@ -11,11 +11,15 @@ import { empresas } from "./empresa.routes";
 import contactos from "./contact.routes";
 import { address } from "./address.routes";
 import { municipio } from "./municipio.routes";
+import { amontoados } from "./amontoado_relatado.routes";
+import { agenda } from "./agenda.routes";
 
 export default async function Routes(fastify: FastifyInstance){
     await tipoEmpresa(fastify);
+    await agenda(fastify)
     await tipoUser(fastify);
     await provincia(fastify);
+    await amontoados(fastify)
     await municipio(fastify);
     await notificacao(fastify);
     await feedback(fastify);
