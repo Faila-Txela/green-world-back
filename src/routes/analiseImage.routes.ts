@@ -3,12 +3,11 @@ import { BaseRoute } from "./base";
 import { analiseImagemService } from '../modules/service/analise_imagem';
 
 export async function analiseImagem(app: FastifyInstance) {
-    await BaseRoute.handle(app, analiseImagemService, 'analise-imagem');
     
     // Registra a rota personalizada para análise de imagem (lógica específica)
     app.post('/analise-imagem', async (req, res) => {
         const { imageBase64 } = req.body as { imageBase64: string };
-
+        //await BaseRoute.handle(app, analiseImagemService, 'analise-imagem');
         try {
             const result = await analiseImagemService.analisarImagem(imageBase64);
             res.send(result);  // Envia a resposta da análise para o cliente

@@ -21,8 +21,8 @@ class AmontoadoRelatadoValidation {
     prioridade: z.enum(["BAIXA", "MEDIA", "ALTA"]),
     bairro: z
     .string()
-    .min(20, "O bairro deve ter no mínimo 20 carateres.")
-    .max(25, "O bairro deve ter no máximo 25 caracteres."),
+    .min(10, "O bairro deve ter no mínimo 10 carateres.")
+    .max(20, "O bairro deve ter no máximo 20 caracteres."),
   });
 
   getDataToUpdate = this.getData.partial();

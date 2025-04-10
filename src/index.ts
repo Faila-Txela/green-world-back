@@ -6,7 +6,6 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyStatic from '@fastify/static';
 import path from 'path';
 import Routes from './routes';
-import { ensureUploadDirectoryExists } from './utils/ensureUploadDirectoryExists'
 
   //Instanciando o Fastify (logger: true),simboliza que ele vai mostrar logs no console,facilitando a inspenção de erros.
 const app: FastifyInstance = fastify({
@@ -15,7 +14,6 @@ const app: FastifyInstance = fastify({
   //Configuração do servidor
 const start = async () => {
     try {
-        ensureUploadDirectoryExists();
 
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
@@ -54,9 +52,9 @@ const start = async () => {
         
         app.register(Routes);
 
-        app.listen({ port:3001, host }, () => {
-            console.log(`O servidor está rodando na porta ${port}`)
-        })
+        await app.listen({ port: Number(port), host });
+        console.log(`O servidor está rodando na porta ${port}`);
+        
     } catch (err) {
         console.log(err);
         app.log.error(err);
