@@ -4,7 +4,6 @@ import { tipoEmpresa } from "./tipo_empresa.routes";
 import { provincia } from "./provincia.routes";
 import { notificacao } from "./notificacao.routes";
 import { feedback } from "./feedback.routes";
-import { comentario } from "./comentario.routes";
 import { pontos } from "./pontos.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
@@ -13,6 +12,7 @@ import { address } from "./address.routes";
 import { municipio } from "./municipio.routes";
 import { amontoados } from "./amontoado_relatado.routes";
 import { agenda } from "./agenda.routes";
+import { analiseImagem } from './analiseImage.routes'; // Ensure the export matches
 
 export default async function Routes(fastify: FastifyInstance){
     await tipoEmpresa(fastify);
@@ -23,7 +23,7 @@ export default async function Routes(fastify: FastifyInstance){
     await municipio(fastify);
     await notificacao(fastify);
     await feedback(fastify);
-    await comentario(fastify);
+    await analiseImagem(fastify);
     await pontos(fastify);
     await usuarios(fastify);
     await empresas(fastify);
