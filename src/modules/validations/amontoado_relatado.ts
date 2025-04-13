@@ -18,7 +18,8 @@ class AmontoadoRelatadoValidation {
       .number()
       .min(-180, "Longitude inválida.")
       .max(180, "Longitude inválida."),
-    prioridade: z.enum(["BAIXA", "MEDIA", "ALTA"]),
+    prioridade: z.enum(["BAIXA", "ALTA"]),
+    analiseImage: z.string(),
     bairro: z
     .string()
     .min(10, "O bairro deve ter no mínimo 10 carateres.")

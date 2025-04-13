@@ -7,7 +7,6 @@ import { Decimal } from "@prisma/client/runtime/library";
 import { novu } from "../../utils/notifier";
 import { notificacaoModel } from "../models/notificacao";
 import { empresaModel } from "../models/empresa";
-
 class AmontoadoRelatadoService extends BaseService {
     model = amontoadoRelatadoModel;
     createValidationSchema = amontoadoRelatadoValidations.getData;
@@ -16,7 +15,7 @@ class AmontoadoRelatadoService extends BaseService {
     async create(req: FastifyRequest, res: FastifyReply) {
         try {
             // Validação de dados da requisição
-            const { userId, descricao, latitude, longitude, bairro } = amontoadoRelatadoValidations.getData.parse(req.body);
+            const { userId, descricao, latitude, longitude, bairro, analiseImage } = amontoadoRelatadoValidations.getData.parse(req.body)
 
             // Criando o relato de amontoado no banco de dados
             const relatar = await prisma.amontoadoRelatado.create({
@@ -32,12 +31,10 @@ class AmontoadoRelatadoService extends BaseService {
                 }
             });
 
-            // Obtendo todas as empresas para enviar notificações
             const empresas = await empresaModel.getAll();
 
             // Criando notificações para cada empresa
             for (const empresa of empresas) {
-                // Criação de notificação para cada empresa
                 await notificacaoModel.create({
                     empresaId: empresa.id,
                     titulo: "Novo amontoado",
@@ -51,13 +48,13 @@ class AmontoadoRelatadoService extends BaseService {
             // Enviando uma notificação usando o Novu para o usuário
             await novu.trigger('notifier-project', {
                 to: {
-                    subscriberId: userId,  // ID do usuário
-                    email: "albertinasauimbo17@gmail.com",  // Email do usuário ou destinatário
+                    subscriberId: userId,
+                    email: "albertinasauimbo17@gmail.com",
                 },
                 payload: {
-                    titulo: 'Novo relato recebido',  // Título da notificação
-                    descricao: 'Um novo relato foi enviado no seu ponto de coleta.',  // Descrição do relato
-                    data: new Date().toLocaleString(),  // Data e hora atual no formato local
+                    titulo: 'Novo relato recebido',
+                    descricao: 'Um novo relato foi enviado no seu ponto de coleta.',
+                    data: new Date().toLocaleString(),
                 }
             });
 
@@ -65,10 +62,9 @@ class AmontoadoRelatadoService extends BaseService {
             return res.status(201).send(relatar);
         } catch (error: any) {
             console.error("Erro ao criar o relato do amontoado", error);
-            return res.status(400).send({ message: error.message || error });
+            return res.status(400).send({message: error.message || error })
         }
     }
-
 }
 
 export const amontoadoRelatadoService = new AmontoadoRelatadoService();

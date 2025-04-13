@@ -9,6 +9,3 @@ export const algoritmo = process.env.ALGORITMO
 export const jwt_key = process.env.JWT_KEY
 export const jwt_expires = process.env.JWT_EXPIRES_IN
 
- //API do Google Cloud Vision para a análise das imagens
-import { ImageAnnotatorClient } from "@google-cloud/vision";
-export const visionClient = new ImageAnnotatorClient();

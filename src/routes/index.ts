@@ -12,7 +12,7 @@ import { address } from "./address.routes";
 import { municipio } from "./municipio.routes";
 import { amontoados } from "./amontoado_relatado.routes";
 import { agenda } from "./agenda.routes";
-import { analiseImagem } from './analiseImage.routes'; // Ensure the export matches
+import { analiseImagem } from './analise_imagem.routes'
 
 export default async function Routes(fastify: FastifyInstance){
     await tipoEmpresa(fastify);
@@ -21,9 +21,9 @@ export default async function Routes(fastify: FastifyInstance){
     await provincia(fastify);
     await amontoados(fastify)
     await municipio(fastify);
+    await analiseImagem(fastify);
     await notificacao(fastify);
     await feedback(fastify);
-    await analiseImagem(fastify);
     await pontos(fastify);
     await usuarios(fastify);
     await empresas(fastify);
