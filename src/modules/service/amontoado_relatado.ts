@@ -24,10 +24,10 @@ class AmontoadoRelatadoService extends BaseService {
                     latitude: new Decimal(latitude),
                     longitude: new Decimal(longitude),
                     bairro,
-                    prioridade: "ALTA",  // Definido como "ALTA" por padrão
-                    provinciaId: "Default Provincia",  // Província padrão
-                    municipioId: "Default municipio",  // Município padrão
-                    user_id: userId,  // ID do usuário que relatou
+                    prioridade: "ALTA",  
+                    provinciaId: "", 
+                    municipioId: "",  
+                    user_id: userId, 
                 }
             });
 
@@ -37,7 +37,7 @@ class AmontoadoRelatadoService extends BaseService {
             for (const empresa of empresas) {
                 await notificacaoModel.create({
                     empresaId: empresa.id,
-                    titulo: "Novo amontoado",
+                    titulo: "Novo amontoado feito",
                     mensagem: `Novo relato de amontoado recebido em sua área.`,
                     userId: null,
                     createAt: new Date(),

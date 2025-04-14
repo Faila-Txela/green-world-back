@@ -1,5 +1,6 @@
 // src/routes/analise-imagem.ts
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { analiseImagemService } from '../modules/service/analise_imagem';
 import Clarifai from 'clarifai';
 
 const clarifai = new Clarifai.App({
@@ -26,4 +27,9 @@ export async function analiseImagem(app: FastifyInstance) {
       return reply.status(500).send({ sucesso: false, erro: error.message });
     }
   });
+
+  app.post("/analise-imagem/criar", async (req, res) => {
+    return analiseImagemService.create(req, res); // salva no banco
+  });
+
 }
