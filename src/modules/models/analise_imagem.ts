@@ -1,10 +1,10 @@
-import { AnaliseImagem } from "@prisma/client";
-import { BaseModel } from "./base";
-import prisma from "../lib/prisma";
+// import { AnaliseImagem } from "@prisma/client";
+// import { BaseModel } from "./base";
+// import prisma from "../lib/prisma";
 
-  class AnaliseImagemModel extends BaseModel<AnaliseImagem> {
-    model = prisma.contactos;
-    include = {}
-  }
+//   class AnaliseImagemModel extends BaseModel<AnaliseImagem> {
+//     model = prisma.contactos;
+//     include = {}
+//   }
 
-export const analiseImageModel = new AnaliseImagemModel();
+// export const analiseImageModel = new AnaliseImagemModel();

@@ -4,7 +4,6 @@ import { amontoadoRelatadoValidations } from "../validations/amontoado_relatado"
 import { BaseService } from "./base";
 import prisma from "../lib/prisma";
 import { Decimal } from "@prisma/client/runtime/library";
-import { novu } from "../../utils/notifier";
 import { notificacaoModel } from "../models/notificacao";
 import { empresaModel } from "../models/empresa";
 class AmontoadoRelatadoService extends BaseService {
@@ -15,7 +14,7 @@ class AmontoadoRelatadoService extends BaseService {
     async create(req: FastifyRequest, res: FastifyReply) {
         try {
             // Validação de dados da requisição
-            const { userId, descricao, latitude, longitude, bairro, analiseImage } = amontoadoRelatadoValidations.getData.parse(req.body)
+            const { userId, descricao, latitude, longitude, bairro } = amontoadoRelatadoValidations.getData.parse(req.body)
 
             // Criando o relato de amontoado no banco de dados
             const relatar = await prisma.amontoadoRelatado.create({
@@ -44,19 +43,6 @@ class AmontoadoRelatadoService extends BaseService {
                     updateAt: new Date()
                 });
             }
-
-            // Enviando uma notificação usando o Novu para o usuário
-            await novu.trigger('notifier-project', {
-                to: {
-                    subscriberId: userId,
-                    email: "albertinasauimbo17@gmail.com",
-                },
-                payload: {
-                    titulo: 'Novo relato recebido',
-                    descricao: 'Um novo relato foi enviado no seu ponto de coleta.',
-                    data: new Date().toLocaleString(),
-                }
-            });
 
             // Retornando a resposta com o relato criado
             return res.status(201).send(relatar);

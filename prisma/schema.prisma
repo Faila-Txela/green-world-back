@@ -63,6 +63,7 @@ model Empresa {
   pagamento      Pagamento[]
   agenda         Agenda[]
   notificacao    Notificacao[]
+  contactos      Contactos[]
 }
 
 model Endereco {
@@ -92,22 +93,22 @@ model AmontoadoRelatado {
   users           Users             @relation(fields: [user_id], references: [id])
   relatoriocoleta RelatorioColeta[]
   prioridade      Prioridade
-  analiseImagem   AnaliseImagem[]
+//  analiseImagem   AnaliseImagem[]
 
   @@index([user_id])
 }
 
-model AnaliseImagem {
-  id                    Int      @id @default(autoincrement())
-  imageUrl              String
-  labels                Json
-  analysisDate          DateTime @default(now())
-  status                String   @default("pending")
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @default(now()) @updatedAt
-  amontoadoRelatadoId   String
-  amontoadoRelatado     AmontoadoRelatado  @relation(fields: [amontoadoRelatadoId], references: [id])
-}
+// model AnaliseImagem {
+//   id                    String      @id @default(autoincrement())
+//   imageUrl              String
+//   labels                Json
+//   analysisDate          DateTime @default(now())
+//   status                String   @default("pending")
+//   createdAt             DateTime @default(now())
+//   updatedAt             DateTime @default(now()) @updatedAt
+//   amontoadoRelatadoId   String
+//   amontoadoRelatado     AmontoadoRelatado  @relation(fields: [amontoadoRelatadoId], references: [id])
+// }
 
 
 enum StatusColeta {
@@ -205,8 +206,10 @@ model Contactos {
   nome      String
   mensagem  String
   userId    String
+  empresaId String
   email     String
   createAt  DateTime @default(now())
   upadateAt DateTime @updatedAt
   users     Users    @relation(fields: [userId], references: [id])
+  empresa   Empresa  @relation(fields: [empresaId], references: [id])
 }
