@@ -51,7 +51,7 @@ export async function analiseImagem(app: FastifyInstance){
         if (buffer) {
           streamifier.createReadStream(buffer).pipe(uploadStream);
         } else {
-          reject(new Error("Buffer is null"));
+          reject(new Error("Buffer é nulo"));
         }
       });
 

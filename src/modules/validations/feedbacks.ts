@@ -1,13 +1,17 @@
-import z from "zod"
+import z from "zod";
 
 class FeedbackValidation {
-    getData = z.object({
-        userId: z.string().uuid(),
+    baseData = z.object({
+        userId: z.string().uuid().optional(),
+        empresaId: z.string().uuid().optional(),
         feedback: z.string().nonempty(),
-    })
+    });
 
-    getDataToUpdate = this.getData.partial();
+    getData = this.baseData.refine((data) => data.userId || data.empresaId, {
+        message: "É necessário informar userId ou empresaId.",
+    });
+
+    getDataToUpdate = this.baseData.partial();
 }
 
 export const feedbackValidations = new FeedbackValidation();
-

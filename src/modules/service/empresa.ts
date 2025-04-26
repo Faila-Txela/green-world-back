@@ -1,4 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+
+// Extend FastifyRequest to include the 'user' property
+declare module "fastify" {
+    interface FastifyRequest {
+        user?: string; // Replace 'any' with the appropriate type for 'user'
+    }
+}
 import { empresaModel } from "../models/empresa";
 import { empresaValidations } from "../validations/empresa";
 import { BaseService } from "./base";
@@ -35,6 +42,19 @@ class EmpresaService extends BaseService {
             }
             await authService.login(empresa, req)
             return res.code(200).send({ message: 'Logado com sucesso', data: empresa });
+        } catch (error: any) {
+            return res.code(400).send({error})
+        }
+    }
+
+    async onlogOut(req: FastifyRequest, res: FastifyReply) {
+        try {
+            const { user } = req
+            if (!user) {
+                return res.status(401).send({ message: 'Usuário não encontrado' });
+            }
+            await authService.logOut(req, res)
+            return res.code(200).send({ message: 'Deslogado com sucesso' });
         } catch (error: any) {
             return res.code(400).send({error})
         }

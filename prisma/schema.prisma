@@ -31,7 +31,6 @@ model Users {
   contactos         Contactos[]
   pontos            Pontos[]
   Pagamento         Pagamento[]
-
   @@index([tipoUser_id])
 }
 
@@ -64,6 +63,7 @@ model Empresa {
   agenda         Agenda[]
   notificacao    Notificacao[]
   contactos      Contactos[]
+  feedbacks      Feedback[]
 }
 
 model Endereco {
@@ -165,9 +165,11 @@ model Agenda {
 model Feedback {
   id        String   @id @default(uuid())
   userId    String
+  empresaId String?
   feedback  String
   createAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
+  empresa   Empresa?  @relation(fields: [empresaId], references: [id])
   user      Users    @relation(fields: [userId], references: [id])
 }
 
