@@ -2,85 +2,85 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import streamifier from 'streamifier';
 import Clarifai from 'clarifai';
 import { v2 as cloudinary } from 'cloudinary';
+import { promisify } from 'util';
 
-
+// Configure Cloudinary
 cloudinary.config({
   cloud_name: 'dujc01crk',
   api_key: '331127929196393',
-  api_secret: 'kOYuTBy3MtHze8xEbq0orDZxE2w'
+  api_secret: process.env.API_SECRET_CLOUDINARY
 });
 
 const clarifai = new Clarifai.App({
   apiKey: 'd9bf899de2c54473879054e6e59c0b04'
 });
 
-export async function analiseImagem(app: FastifyInstance){
+// Promisify the Cloudinary upload for better async handling
+const uploadStream = promisify(cloudinary.uploader.upload_stream);
+
+export async function analiseImagem(app: FastifyInstance) {
   app.post("/analise-imagem/criar", async (req: FastifyRequest, reply: FastifyReply) => {
-    const parts = req.parts();
-
-    let buffer: Buffer | null = null;
-    let amontoadoRelatadoId = "";
-
-    //Processando os dados do formulário
-    for await (const part of parts) {
-      if (part.type === "file" && part.fieldname === "image") {
-        buffer = await part.toBuffer();
+    try {
+      const startTime = Date.now();
+      
+      if (!req.isMultipart()) {
+        return reply.status(400).send({ error: "Request must be multipart" });
       }
 
-      if (part.type === "field" && part.fieldname === "amontoadoRelatadoId") {
-        if (typeof part.value === "string") {
-          amontoadoRelatadoId = part.value
+      const parts = req.parts();
+      let buffer: Buffer | null = null;
+      let amontoadoRelatadoId = "";
+
+      // Process form data
+      for await (const part of parts) {
+        if (part.type === "file" && part.fieldname === "image") {
+          buffer = await part.toBuffer();
+        } else if (part.type === "field" && part.fieldname === "amontoadoRelatadoId") {
+          amontoadoRelatadoId = part.value as string;
         }
       }
-    }
 
-    try {
+      if (!buffer) {
+        return reply.status(400).send({ error: "No image provided" });
+      }
 
-      const startTime = Date.now();
-
-      //Upload da imagem no cloudinary
-      const imageUrl = await new Promise<string>((resolve, reject) => {
+      // Upload image to Cloudinary
+      const cloudinaryStartTime = Date.now();
+      const imageStream = streamifier.createReadStream(buffer);
+      const cloudinaryResult = await new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
-          { folder: "greenworld", timestamp: new Date().getTime() },
+          { folder: "greenworld" },
           (error, result) => {
-            if (error || !result) return reject(error); 
-              reject(error);
-            resolve(result.secure_url);
+            if (error) reject(error);
+            else resolve(result);
           }
         );
-        if (buffer) {
-          streamifier.createReadStream(buffer).pipe(uploadStream);
-        } else {
-          reject(new Error("Buffer é nulo"));
-        }
+        imageStream.pipe(uploadStream);
       });
+      console.log("Cloudinary upload time:", Date.now() - cloudinaryStartTime);
 
-      console.log("Cloudinary upload time:", Date.now() - startTime)
-
+      // Analyze image with Clarifai
       const clarifaiStartTime = Date.now();
-
-      //Analisando a imagem com o Clarifai
       const clarifaiResponse = await clarifai.models.predict(
-        clarifai.GENERAL_MODEL,
-        { base64: buffer ? buffer.toString("base64") : "" }
-      ).catch((error: any) => {
-        if (error.message.includes('timeout')) {
-          throw new Error('Clarifai API Timeout');
-        }
-        throw error;
-      })
+        Clarifai.GENERAL_MODEL,
+        { base64: buffer.toString("base64") }
+      );
+      console.log("Clarifai response time:", Date.now() - clarifaiStartTime);
 
-    console.log("Clarifai response time:", Date.now() - clarifaiStartTime)
+      const conceitos = clarifaiResponse.outputs[0].data.concepts;
 
-    const conceitos = clarifaiResponse.outputs[0].data.concepts;
-
-    //Criando o registro no banco de dados
-    return reply.send({ conceitos, imageUrl, amontoadoRelatadoId });  
+      return reply.send({ 
+        conceitos, 
+        imageUrl: (cloudinaryResult as any).secure_url, 
+        amontoadoRelatadoId 
+      });
+      
     } catch (error: any) {
-      if (error.message.includes("timeout")) {
-        throw new Error("Clarifai API Timeout")
-      }
-      throw error;
+      console.error("Error processing image:", error);
+      return reply.status(500).send({ 
+        error: "Erro ao processar a imagem", 
+        details: error.message 
+      });
     }
-  })
+  });
 }

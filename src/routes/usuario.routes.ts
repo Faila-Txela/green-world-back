@@ -6,5 +6,5 @@ import { authService } from "../modules/service/auth";
 export async function usuarios(app: FastifyInstance) {
     await BaseRoute.handle(app, usuarioService, 'users');
     app.post('/user/login', usuarioService.login)
-    app.get('/logout', authService.logOut)
+    app.get('/user/logout', authService.logOut)
 }

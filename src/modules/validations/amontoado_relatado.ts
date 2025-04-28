@@ -1,4 +1,5 @@
 import z from "zod";
+import { provincia } from "../../routes/provincia.routes";
 
 class AmontoadoRelatadoValidation {
   getData = z.object({
@@ -14,6 +15,8 @@ class AmontoadoRelatadoValidation {
       .min(-180, "Longitude inválida.")
       .max(180, "Longitude inválida."),
     prioridade: z.enum(["BAIXA", "ALTA"]),
+    provinciaId: z.string().uuid(),
+    municipioId: z.string().uuid(),
     //analiseImage: z.string(),
     bairro: z
       .string()

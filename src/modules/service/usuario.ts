@@ -41,6 +41,36 @@ class UsuarioService extends BaseService {
             return res.status(400).send({ error });
         }
     }
+
+        async logOut(req: FastifyRequest, res: FastifyReply) {
+            try {
+                const { user } = req
+                if (!user) {
+                    return res.status(401).send({ message: 'Usuário não encontrado' });
+                }
+                await authService.logOut(req, res)
+                return res.code(200).send({ message: 'Deslogado com sucesso' });
+            } catch (error: any) {
+                return res.code(400).send({error})
+            }
+        }
+    
+        async verifyPassword(req: FastifyRequest, res: FastifyReply) {
+            try {
+                const { senha } = userValidations.getByLogin.parse(req.body)
+                const { user } = req
+                if (!user) {
+                    return res.status(401).send({ message: 'Usuário não encontrado' });
+                }
+                const verifyPassword = await hashService.compare(senha, user.senha)
+                if (!verifyPassword) {
+                    return res.status(400).send({ message: 'Senha incorrecta' });
+                }
+                return res.code(200).send({ message: 'Senha correcta' });
+            } catch (error: any) {
+                return res.code(400).send({error})
+            }
+        }   
 }
 
 export const usuarioService = new UsuarioService();

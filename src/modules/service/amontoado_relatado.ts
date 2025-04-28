@@ -14,20 +14,18 @@ class AmontoadoRelatadoService extends BaseService {
     async create(req: FastifyRequest, res: FastifyReply) {
         try {
             // Validação de dados da requisição
-            const { userId, descricao, latitude, longitude, bairro } = amontoadoRelatadoValidations.getData.parse(req.body)
+            const { userId, descricao, latitude, longitude, bairro, municipioId, provinciaId, prioridade } = amontoadoRelatadoValidations.getData.parse(req.body)
 
             // Criando o relato de amontoado no banco de dados
-            const relatar = await prisma.amontoadoRelatado.create({
-                data: {
-                    descricao,
-                    latitude: new Decimal(latitude),
-                    longitude: new Decimal(longitude),
-                    bairro,
-                    prioridade: "ALTA",  
-                    provinciaId: "", 
-                    municipioId: "",  
-                    user_id: userId, 
-                }
+            const relatar = await amontoadoRelatadoModel.create({
+                bairro,
+                descricao,
+                latitude: new Decimal(latitude),
+                longitude: new Decimal(longitude), 
+                user_id: userId, 
+                municipioId,
+                provinciaId, 
+                prioridade,
             });
 
             const empresas = await empresaModel.getAll();
@@ -48,7 +46,7 @@ class AmontoadoRelatadoService extends BaseService {
             return res.status(201).send(relatar);
         } catch (error: any) {
             console.error("Erro ao criar o relato do amontoado", error);
-            return res.status(400).send({message: error.message || error })
+            return res.status(400).send({ message: error.message || error })
         }
     }
 }

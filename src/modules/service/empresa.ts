@@ -3,7 +3,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 // Extend FastifyRequest to include the 'user' property
 declare module "fastify" {
     interface FastifyRequest {
-        user?: string; // Replace 'any' with the appropriate type for 'user'
+        user?: { senha: string }; // Update 'user' to include the 'senha' property
     }
 }
 import { empresaModel } from "../models/empresa";
@@ -47,7 +47,7 @@ class EmpresaService extends BaseService {
         }
     }
 
-    async onlogOut(req: FastifyRequest, res: FastifyReply) {
+    async logOut(req: FastifyRequest, res: FastifyReply) {
         try {
             const { user } = req
             if (!user) {
@@ -59,6 +59,23 @@ class EmpresaService extends BaseService {
             return res.code(400).send({error})
         }
     }
+
+    async verifyPassword(req: FastifyRequest, res: FastifyReply) {
+        try {
+            const { senha } = empresaValidations.getByLogin.parse(req.body)
+            const { user } = req
+            if (!user) {
+                return res.status(401).send({ message: 'Usuário não encontrado' });
+            }
+            const verifyPassword = await hashService.compare(senha, user.senha)
+            if (!verifyPassword) {
+                return res.status(400).send({ message: 'Senha incorrecta' });
+            }
+            return res.code(200).send({ message: 'Senha correcta' });
+        } catch (error: any) {
+            return res.code(400).send({error})
+        }
+    }   
 }
 
 export const empresaService = new EmpresaService();
