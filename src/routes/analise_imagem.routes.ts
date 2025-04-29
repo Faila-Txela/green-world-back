@@ -7,12 +7,12 @@ import { promisify } from 'util';
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: 'dujc01crk',
-  api_key: '331127929196393',
+  api_key: process.env.API_KEY_CLOUDINARY,
   api_secret: process.env.API_SECRET_CLOUDINARY
 });
 
 const clarifai = new Clarifai.App({
-  apiKey: 'd9bf899de2c54473879054e6e59c0b04'
+  apiKey: process.env.API_KEY_CLARIFAI
 });
 
 // Promisify the Cloudinary upload for better async handling
@@ -31,7 +31,7 @@ export async function analiseImagem(app: FastifyInstance) {
       let buffer: Buffer | null = null;
       let amontoadoRelatadoId = "";
 
-      // Process form data
+      // Processo do form-data
       for await (const part of parts) {
         if (part.type === "file" && part.fieldname === "image") {
           buffer = await part.toBuffer();
@@ -44,7 +44,7 @@ export async function analiseImagem(app: FastifyInstance) {
         return reply.status(400).send({ error: "No image provided" });
       }
 
-      // Upload image to Cloudinary
+      // Upload da imagem para o Cloudinary
       const cloudinaryStartTime = Date.now();
       const imageStream = streamifier.createReadStream(buffer);
       const cloudinaryResult = await new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ export async function analiseImagem(app: FastifyInstance) {
       });
       console.log("Cloudinary upload time:", Date.now() - cloudinaryStartTime);
 
-      // Analyze image with Clarifai
+      // Analisando a imagem com o Clarifai
       const clarifaiStartTime = Date.now();
       const clarifaiResponse = await clarifai.models.predict(
         Clarifai.GENERAL_MODEL,
