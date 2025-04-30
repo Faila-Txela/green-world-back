@@ -16,9 +16,9 @@ class NotificacaoModel extends BaseModel<Notificacao> {
 
     async getByUserId(userId: string){
         return await this.model.findMany({
-            where:{
-                userId
-            }
+            // where:{
+            //     userId
+            // }
         })
     }
 }

@@ -14,8 +14,8 @@ class AmontoadoRelatadoService extends BaseService {
     async create(req: FastifyRequest, res: FastifyReply) {
         try {
             // Validação de dados da requisição
-            const { userId, descricao, latitude, longitude, bairro, municipioId, provinciaId, prioridade } = amontoadoRelatadoValidations.getData.parse(req.body)
-
+            const { userId, descricao, latitude, longitude, bairro, municipioId, provinciaId, prioridade } = amontoadoRelatadoValidations.getData.parse(req.body);
+    
             // Criando o relato de amontoado no banco de dados
             const relatar = await amontoadoRelatadoModel.create({
                 bairro,
@@ -27,10 +27,11 @@ class AmontoadoRelatadoService extends BaseService {
                 provinciaId, 
                 prioridade,
             });
-
+    
+            // Buscar todas as empresas
             const empresas = await empresaModel.getAll();
-
-            // Criando notificações para cada empresa
+    
+            // Criar notificações para cada empresa
             for (const empresa of empresas) {
                 await notificacaoModel.create({
                     empresaId: empresa.id,
@@ -41,14 +42,37 @@ class AmontoadoRelatadoService extends BaseService {
                     updateAt: new Date()
                 });
             }
-
-            // Retornando a resposta com o relato criado
+    
+            // Pontos: adicionar 5 por relato
+            const pontosGanhos = 5;
+    
+            const pontosExistente = await prisma.pontos.findUnique({
+                where: { id: userId },
+            });
+    
+            if (pontosExistente) {
+                await prisma.pontos.update({
+                    where: { id : userId },
+                    data: {
+                        pontos: { increment: pontosGanhos },
+                    },
+                });
+            } else {
+                await prisma.pontos.create({
+                    data: {
+                        userId,
+                        pontos: pontosGanhos,
+                    },
+                });
+            }
+    
             return res.status(201).send(relatar);
         } catch (error: any) {
             console.error("Erro ao criar o relato do amontoado", error);
             return res.status(400).send({ message: error.message || error })
         }
     }
+    
 }
 
 export const amontoadoRelatadoService = new AmontoadoRelatadoService();
