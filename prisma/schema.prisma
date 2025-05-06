@@ -19,7 +19,7 @@ model Users {
   email             String              @unique()
   senha             String
   tipoUser_id       String
-  iban              String
+  iban              String?
   nome_titular      String
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
@@ -54,7 +54,7 @@ model Empresa {
   email          String        @unique
   nif            String
   senha          String
-  site           String
+  site           String?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
   endereco       Endereco      @relation(fields: [enderecoId], references: [id])

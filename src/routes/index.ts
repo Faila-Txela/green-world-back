@@ -12,6 +12,7 @@ import { address } from "./address.routes";
 import { municipio } from "./municipio.routes";
 import { amontoados } from "./amontoado_relatado.routes";
 import { agenda } from "./agenda.routes";
+import { graficoRoutes } from "./dashboardData.routes";
 import { analiseImagem } from './analise_imagem.routes'
 
 export default async function Routes(fastify: FastifyInstance){
@@ -24,6 +25,7 @@ export default async function Routes(fastify: FastifyInstance){
     await analiseImagem(fastify);
     await notificacao(fastify);
     await feedback(fastify);
+    await graficoRoutes(fastify)
     await pontos(fastify);
     await usuarios(fastify);
     await empresas(fastify);

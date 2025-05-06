@@ -5,7 +5,7 @@ class EmpresaValidation {
         nome: z.string(),
         enderecoId: z.string().uuid(),
         tipoEmpresa_id: z.string().uuid(),
-        site: z.string(),
+        site: z.string().optional(),
         email: z.string().email(),
         nif: z.string(),
         senha: z.string()
