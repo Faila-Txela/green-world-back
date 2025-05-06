@@ -147,6 +147,8 @@ model Notificacao {
   mensagem  String
   createAt  DateTime @default(now())
   updateAt  DateTime
+  recebeEmail  Boolean @default(true)
+  recebeSMS    Boolean @default(false)
   empresa   Empresa? @relation(fields: [empresaId], references: [id])
   users     Users?   @relation(fields: [userId], references: [id])
 }
