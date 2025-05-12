@@ -30,6 +30,14 @@ class AmontoadoRelatadoService extends BaseService {
     
             // Buscar todas as empresas
             const empresas = await empresaModel.getAll();
+
+            // const getAll = async () => {
+            //     return await prisma.amontoadoRelatado.findMany({
+            //         include: {
+            //             municipio: true,
+            //         }
+            //     })
+            // }
     
             // Criar notificações para cada empresa
             for (const empresa of empresas) {
@@ -39,7 +47,9 @@ class AmontoadoRelatadoService extends BaseService {
                     mensagem: `Novo relato de amontoado recebido em sua área.`,
                     userId: null,
                     createAt: new Date(),
-                    updateAt: new Date()
+                    updateAt: new Date(),
+                    recebeEmail: false,
+                    recebeSMS: false    
                 });
             }
     
