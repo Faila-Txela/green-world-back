@@ -15,16 +15,15 @@ const clarifai = new Clarifai.App({
   apiKey: process.env.API_KEY_CLARIFAI
 });
 
-// Promisify the Cloudinary upload for better async handling
-const uploadStream = promisify(cloudinary.uploader.upload_stream);
+//const uploadStream = promisify(cloudinary.uploader.upload_stream);
 
 export async function analiseImagem(app: FastifyInstance) {
   app.post("/analise-imagem/criar", async (req: FastifyRequest, reply: FastifyReply) => {
     try {
-      const startTime = Date.now();
+      //const startTime = Date.now();
       
       if (!req.isMultipart()) {
-        return reply.status(400).send({ error: "Request must be multipart" });
+        return reply.status(400).send({ error: "Requisição precisa ser multipart." });
       }
 
       const parts = req.parts();
@@ -41,7 +40,7 @@ export async function analiseImagem(app: FastifyInstance) {
       }
 
       if (!buffer) {
-        return reply.status(400).send({ error: "No image provided" });
+        return reply.status(400).send({ error: "Nenhuma imagem foi enviada." });
       }
 
       // Upload da imagem para o Cloudinary
