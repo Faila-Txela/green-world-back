@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch src",
     "migrate": "npx prisma migrate dev",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "start": "node index.ts"
   },
   "keywords": [],
   "author": "",
