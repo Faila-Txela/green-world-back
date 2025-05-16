@@ -13,19 +13,21 @@ import { municipio } from "./municipio.routes";
 import { amontoados } from "./amontoado_relatado.routes";
 import { agenda } from "./agenda.routes";
 import { graficoRoutes } from "./dashboardData.routes";
+import { emailRoutes } from "./email.routes";
 import { analiseImagem } from './analise_imagem.routes'
 
 export default async function Routes(fastify: FastifyInstance){
     await tipoEmpresa(fastify);
-    await agenda(fastify)
+    await agenda(fastify);
     await tipoUser(fastify);
     await provincia(fastify);
-    await amontoados(fastify)
+    await amontoados(fastify);
     await municipio(fastify);
     await analiseImagem(fastify);
     await notificacao(fastify);
     await feedback(fastify);
-    await graficoRoutes(fastify)
+    await graficoRoutes(fastify);
+    await emailRoutes(fastify);
     await pontos(fastify);
     await usuarios(fastify);
     await empresas(fastify);
