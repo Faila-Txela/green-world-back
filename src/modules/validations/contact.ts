@@ -5,7 +5,6 @@ class ContactoValidation {
         nome: z.string(),
         email: z.string(),
         mensagem: z.string(),
-        userId: z.string().uuid(),
     })
 
     getDataToUpdate = this.getData.partial();
