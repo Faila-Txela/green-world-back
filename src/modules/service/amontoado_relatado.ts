@@ -49,7 +49,8 @@ class AmontoadoRelatadoService extends BaseService {
                     createAt: new Date(),
                     updateAt: new Date(),
                     recebeEmail: false,
-                    recebeSMS: false    
+                    recebeSMS: false,
+                    lida: false
                 });
             }
     
