@@ -8,6 +8,7 @@
     "target": "es2022",
 
     "strict": true,
+    "outDir":"./build",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node16",

@@ -21,7 +21,7 @@ class EmpresaService extends BaseService {
         try {
             const { nome, enderecoId, tipoEmpresa_id, email, nif, senha, site } = empresaValidations.getData.parse(req.body);
             const hashSenha = await hashService.hashPassword(senha);
-            const user = await this.model.create({ nome, enderecoId, tipoEmpresa_id, email, nif, senha: hashSenha, site });
+            const user = await this.model.create({ nome, enderecoId, tipoEmpresa_id, email, nif, senha: hashSenha, site: site ?? null });
             return res.status(201).send(user);
         } catch (error) {
             return res.status(400).send({ message: error });

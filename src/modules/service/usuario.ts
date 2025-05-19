@@ -15,7 +15,7 @@ class UsuarioService extends BaseService {
         try {
             const { email, iban, nome, nome_titular, senha, tipoUser_id } = userValidations.getData.parse(req.body);
             const hashSenha = await hashService.hashPassword(senha);
-            const user = await userModel.create({ email, iban, nome, nome_titular, senha: hashSenha, tipoUser_id });
+            const user = await userModel.create({ email, iban: iban ?? null, nome, nome_titular, senha: hashSenha, tipoUser_id });
             console.log("Senha", hashSenha);
             return res.status(201).send(user);
         } catch (error: any) {

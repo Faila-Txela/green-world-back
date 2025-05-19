@@ -16,8 +16,6 @@ class ContactoService extends BaseService {
             nome,
             mensagem,
             email,
-            createAt: new Date(),
-            upadateAt: new Date()
         });
         return res.status(201).send(contacto);
 
