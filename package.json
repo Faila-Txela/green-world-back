@@ -5,9 +5,10 @@
   "module": "common",
   "scripts": {
     "dev": "tsx watch src",
+    "build":"tsc",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio",
-    "start": "node index.ts"
+    "start": "node ./src/index.js"
   },
   "keywords": [],
   "author": "",
