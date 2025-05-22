@@ -8,5 +8,4 @@ export async function empresas(app: FastifyInstance) {
     app.post('/empresas/login', empresaService.login)
     app.post('/empresas/logOut', authService.logOut)
     app.post('/empresas/verify-password', empresaService.verifyPassword)
-    //app.post('/empresas/forgot-password', empresaService.forgotPassword)
 }

@@ -40,3 +40,5 @@ import { v2 as cloudinary } from 'cloudinary';
     
     console.log(autoCropUrl);    
 })();
+
+// colocar este link no axios do front-end: https://green-world-back.onrender.com/

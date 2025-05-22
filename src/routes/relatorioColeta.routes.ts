@@ -13,12 +13,12 @@ fastify.put('/relatorio-coleta/:id/status', async (req: FastifyRequest, res: Fas
       data: { statusColeta },
     });
   
-    // Aqui você pode enviar notificação ao usuário via email, push, etc.
+    //Envia notificação ao usuário via email, push
     const user = await prisma.users.findUnique({
         where: { id: relatorioAtualizado.user_id }
       });
       
-      // Enviando notificação (pode ser via e-mail ou tabela de notificações no sistema)
+      // Enviando notificação (pode ser via e-mail ou In-app)
       if (user) {
         await prisma.notificacao.create({
           data: {
