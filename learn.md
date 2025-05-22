@@ -8,7 +8,7 @@ Menos Overhead: Fastify foi projetado para ser leve, com menos código interno g
 Benchmark Oficial: Segundo testes do Fastify, ele é até 4 vezes mais rápido que o Express em algumas situações.
 
 # 📌 Recomendação Final
-Para seu sistema Green World, recomendo o Fastify pelos seguintes motivos:
+Para o sistema da Green World, melhor usar o Fastify pelos seguintes motivos:
 
  - Performance: Mais rápido para lidar com as solicitações de geolocalização e imagens.
  - Escalabilidade: Pronto para crescer sem precisar refatorar no futuro.
@@ -35,14 +35,14 @@ Para seu sistema Green World, recomendo o Fastify pelos seguintes motivos:
 
     npx prisma migrate dev --name ajustando_relacoes = Serve para fazer a actualização do banco de dados,sempre que adicionarmos alguma nova entidade nas nossas tabelas,ou qualquer outro acto que aconteça. Ele faz logo a actualização
 
-}
+# }
 
 
 
 
-VARIÁVEIS DE AMBIENTES SÃO VARIÁVEIS FUNDAMENTAIS PARA O FUNCIONAMENTO DE UM SISTEMA,
+VARIÁVEIS DE AMBIENTES SÃO VARIÁVEIS FUNDAMENTAIS PARA O FUNCIONAMENTO DE UM SISTEMA;
 
-Midllewares 
+Midllewares;
 
 
 
