@@ -13,6 +13,12 @@ class UserModel extends BaseModel<Users> {
             }
         })
     }
+
+    async deleteById(id: string) {
+        return await this.users.delete({
+            where: { id }
+        });
+    }
 }
 
 

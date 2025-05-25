@@ -70,7 +70,22 @@ class UsuarioService extends BaseService {
             } catch (error: any) {
                 return res.code(400).send({error})
             }
-        }   
+        } 
+        
+        async deleteAccount(req: FastifyRequest, res: FastifyReply) {
+            try {
+                const user = req.user as { id: number, senha: string };
+                if (!user || typeof user.id !== "number") {
+                    return res.status(401).send({ message: 'Usuário não encontrado' });
+                }
+                await userModel.deleteById(user.id.toString());
+                // Fazendo Log out para o usuário após a exclusão da conta do usuário 
+                await authService.logOut(req, res);
+                return res.code(200).send({ message: 'Conta deletada com sucesso' });
+            } catch (error: any) {
+                return res.code(400).send({ error });
+            }
+        }
 }
 
 export const usuarioService = new UsuarioService();

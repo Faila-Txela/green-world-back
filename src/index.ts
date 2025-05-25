@@ -24,8 +24,7 @@ const start = async () => {
                 path: '/',
                 secure: false,   //Formato de desenvolvimento(https = produção)
                 httpOnly: true,
-                maxAge: 3600000,  
-                  
+                maxAge: 3600000,     
             },
             saveUninitialized: false,
             resave: false
