@@ -6,7 +6,7 @@ class UserValidation {
        email: z.string().email(),
        senha: z.string(),
        tipoUser_id: z.string().uuid(),
-       iban: z.string().min(25).optional(),
+       iban: z.string().min(25).optional().transform(val => val?.trim() || undefined),
        nome_titular: z.string()
     })
 
