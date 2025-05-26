@@ -7,19 +7,10 @@ class EmpresaValidation {
         tipoEmpresa_id: z.string().uuid(),
         site: z.string().optional(),
         email: z.string().email(),
-        nif: z.preprocess(
-            (val) => {
-                if (typeof val === "string") {
-                    const cleaned = val.replace(/\D/g, ""); // Remove tudo que não for dígito
-                    return Number(cleaned);
-                }
-                return val;
-            },
-            z.number()
-                .int("NIF deve ser um número inteiro")
-                .min(1000000000, "NIF deve ter exatamente 10 dígitos")
-                .max(9999999999, "NIF deve ter exatamente 10 dígitos")
-        ),
+        nif: z.string()
+        .min(9, "NIF deve ter exatamente 9 dígitos")
+        .max(9, "NIF deve ter exatamente 9 dígitos"),
+        //.regex(/^\d+$/, "NIF deve conter apenas números"),
         senha: z.string()
     });
 
