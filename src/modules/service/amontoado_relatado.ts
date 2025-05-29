@@ -55,27 +55,27 @@ class AmontoadoRelatadoService extends BaseService {
             }
     
             // Pontos: adicionar 5 por relato
-            const pontosGanhos = 5;
+            // const pontosGanhos = 5;
     
-            const pontosExistente = await prisma.pontos.findUnique({
-                where: { id: userId },
-            });
+            // const pontosExistente = await prisma.pontos.findUnique({
+            //     where: { id: userId },
+            // });
     
-            if (pontosExistente) {
-                await prisma.pontos.update({
-                    where: { id : userId },
-                    data: {
-                        pontos: { increment: pontosGanhos },
-                    },
-                });
-            } else {
-                await prisma.pontos.create({
-                    data: {
-                        userId,
-                        pontos: pontosGanhos,
-                    },
-                });
-            }
+            // if (pontosExistente) {
+            //     await prisma.pontos.update({
+            //         where: { id : userId },
+            //         data: {
+            //             pontos: { increment: pontosGanhos },
+            //         },
+            //     });
+            // } else {
+            //     await prisma.pontos.create({
+            //         data: {
+            //             userId,
+            //             pontos: pontosGanhos,
+            //         },
+            //     });
+            // }
     
             return res.status(201).send(relatar);
         } catch (error: any) {
