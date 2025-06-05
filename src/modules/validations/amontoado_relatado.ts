@@ -20,8 +20,8 @@ class AmontoadoRelatadoValidation {
     //analiseImage: z.string(),
     bairro: z
       .string()
-      .min(8, "O bairro deve ter no mínimo 10 caracteres.")
-      .max(20, "O bairro deve ter no máximo 40 caracteres."),
+      .max(200, "O bairro deve ter no máximo 200 caracteres.")
+      //.min(20, "O bairro deve ter no mínimo 20 caracteres."),
   });
 
   getDataToUpdate = this.getData.partial();

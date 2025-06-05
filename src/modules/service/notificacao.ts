@@ -57,7 +57,7 @@ async updateLidaStatus(req: FastifyRequest, reply: FastifyReply) {
             error: error.message 
         });
     }
-} // Fechando a chave que estava faltando
+} 
 
 }
 
