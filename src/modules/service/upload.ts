@@ -15,7 +15,7 @@ class UploadService {
     private allowedFormats = {
         image: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
         video: ['video/mp4', 'video/webm'],
-        document: ['application/pdf']
+        //document: ['application/pdf']
     };
 
     constructor() {
@@ -33,7 +33,7 @@ class UploadService {
     private getUploadPathAndType(mimeType: string): { path: string, type: string } | null {
         if (this.allowedFormats.image.includes(mimeType)) return { path: this.imageDir, type: 'image' };
         if (this.allowedFormats.video.includes(mimeType)) return { path: this.videoDir, type: 'video' };
-        if (this.allowedFormats.document.includes(mimeType)) return { path: this.documentDir, type: 'document' };
+       // if (this.allowedFormats.document.includes(mimeType)) return { path: this.documentDir, type: 'document' };
         return null;
     }
 

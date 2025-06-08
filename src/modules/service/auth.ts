@@ -19,6 +19,7 @@ declare module 'fastify' {
     }
 }
 
+const number = 0
 class AuthService {
 
     async generateToken(user: Users | Empresa) {
