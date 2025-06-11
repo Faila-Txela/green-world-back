@@ -29,11 +29,8 @@ class NotificacaoService extends BaseService {
 async getByUserId(req: FastifyRequest, reply: FastifyReply) {
     try {
         const { id } = notificacaoValidations.getParams.parse(req.params);
-        const { lida } = req.query as { lida?: string };
-        
-        // Converter string 'true'/'false' para boolean
-        const lidaBool = lida ? lida === 'true' : undefined;
-        const data = await notificacaoModel.getByUserId(id, lidaBool);
+
+        const data = await notificacaoModel.getByUserId(id);
         
         return reply.code(200).send(data);
     } catch (error: any) {

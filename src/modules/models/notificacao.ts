@@ -10,7 +10,10 @@ class NotificacaoModel extends BaseModel<Notificacao> {
    //     return await this.model.findMany({
    //        where:{
    //           empresaId
-   //         }
+   //         },
+   //        OrderBy: {
+   //          createAt: 'desc'
+   //        }
    //    })
    //  }
 
@@ -18,7 +21,7 @@ async getByEmpresaId(empresaId: string, lida?: boolean) {
     return await this.model.findMany({
         where: {
             empresaId,
-            ...(lida !== undefined && { lida })
+            //...(lida !== undefined && { lida })
         },
         orderBy: {
             createAt: 'desc' // Ordena por data decrescente
@@ -26,11 +29,10 @@ async getByEmpresaId(empresaId: string, lida?: boolean) {
     });
 }
 
-async getByUserId(userId: string, lida?: boolean) {
+async getByUserId(userId: string) {
     return await this.model.findMany({
         where: {
-            userId,
-            ...(lida !== undefined && { lida })
+            userId
         },
         orderBy: {
             createAt: 'desc' // Ordena por data decrescente
