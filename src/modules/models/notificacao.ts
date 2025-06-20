@@ -15,7 +15,7 @@ class NotificacaoModel extends BaseModel<Notificacao> {
    //          createAt: 'desc'
    //        }
    //    })
-   //  }
+   //  } 
 
 async getByEmpresaId(empresaId: string, lida?: boolean) {
     return await this.model.findMany({
