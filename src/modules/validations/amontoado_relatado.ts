@@ -1,5 +1,4 @@
 import z from "zod";
-import { provincia } from "../../routes/provincia.routes";
 
 class AmontoadoRelatadoValidation {
   getData = z.object({
