@@ -19,8 +19,7 @@ const clarifai = new Clarifai.App({
 
 export async function analiseImagem(app: FastifyInstance) {
   app.post("/analise-imagem/criar", async (req: FastifyRequest, reply: FastifyReply) => {
-    try {
-      //const startTime = Date.now();
+    try { 
       
       if (!req.isMultipart()) {
         return reply.status(400).send({ error: "Requisição precisa ser multipart." });
@@ -61,7 +60,8 @@ export async function analiseImagem(app: FastifyInstance) {
       // Analisando a imagem com o Clarifai
       const clarifaiStartTime = Date.now();
       const clarifaiResponse = await clarifai.models.predict(
-        Clarifai.IMAGE_CROP_MODEL, 
+        { id: '7fc8c0040379e3be917ac995c2e', version: '2952e' },
+        //Clarifai.GENERAL_MODEL,
         { base64: buffer.toString("base64") }
       );
       console.log("Clarifai response time:", Date.now() - clarifaiStartTime);
@@ -83,3 +83,5 @@ export async function analiseImagem(app: FastifyInstance) {
     }
   });
 }
+
+// fixing a bug🐛🛠️
