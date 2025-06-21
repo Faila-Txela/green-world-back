@@ -61,7 +61,7 @@ export async function analiseImagem(app: FastifyInstance) {
       // Analisando a imagem com o Clarifai
       const clarifaiStartTime = Date.now();
       const clarifaiResponse = await clarifai.models.predict(
-        Clarifai.GENERAL_MODEL,
+        Clarifai.IMAGE_CROP_MODEL, 
         { base64: buffer.toString("base64") }
       );
       console.log("Clarifai response time:", Date.now() - clarifaiStartTime);
