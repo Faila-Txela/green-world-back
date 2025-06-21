@@ -57,11 +57,10 @@ export async function analiseImagem(app: FastifyInstance) {
       });
       console.log("Cloudinary upload time:", Date.now() - cloudinaryStartTime);
 
-      // Analisando a imagem com o Clarifai
+      // Analisando a imagem com o Clarifai, usando o modelo público e gratuito
       const clarifaiStartTime = Date.now();
       const clarifaiResponse = await clarifai.models.predict(
-        { id: '7fc8c0040379e3be917ac995c2e', version: '2952e' },
-        //Clarifai.GENERAL_MODEL,
+        Clarifai.GENERAL_MODEL,
         { base64: buffer.toString("base64") }
       );
       console.log("Clarifai response time:", Date.now() - clarifaiStartTime);
@@ -85,3 +84,8 @@ export async function analiseImagem(app: FastifyInstance) {
 }
 
 // fixing a bug🐛🛠️
+
+// aa7f35c01e0642fda5cf400f543e7c40
+
+
+
