@@ -4,7 +4,7 @@ import Clarifai from 'clarifai';
 import { v2 as cloudinary } from 'cloudinary';
 import { promisify } from 'util';
 
-// Configure Cloudinary
+// Configurando Cloudinary
 cloudinary.config({
   cloud_name: 'dujc01crk',
   api_key: process.env.API_KEY_CLOUDINARY,
