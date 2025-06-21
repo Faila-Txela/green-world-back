@@ -87,5 +87,3 @@ export async function analiseImagem(app: FastifyInstance) {
 
 // aa7f35c01e0642fda5cf400f543e7c40
 
-
-
