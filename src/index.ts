@@ -22,7 +22,7 @@ const start = async () => {
             cookie: {
                 name: 'SessionCookie',
                 path: '/',
-                secure: true,   //Formato de desenvolvimento(https = produção)
+                secure: false,   //Formato de desenvolvimento(https = produção)
                 httpOnly: true,
                 maxAge: 3600000,     
             },

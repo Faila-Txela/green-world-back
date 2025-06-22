@@ -4,6 +4,7 @@ import { BaseService } from "./base";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { hashService } from "./hash";
 import { authService } from "./auth";
+import { Users } from "@prisma/client";
 
 class UsuarioService extends BaseService {
     model = userModel;
@@ -58,16 +59,17 @@ class UsuarioService extends BaseService {
         async verifyPassword(req: FastifyRequest, res: FastifyReply) {
             try {
                 const { senha } = userValidations.getByLogin.parse(req.body)
-                const { user } = req
+                const user = req.data as Users;
                 if (!user) {
                     return res.status(401).send({ message: 'Usuário não encontrado' });
                 }
                 const verifyPassword = await hashService.compare(senha, user.senha)
                 if (!verifyPassword) {
-                    return res.status(400).send({ message: 'Senha incorrecta' });
+                    return res.status(400).send({ message: 'Senha incorreta' });
                 }
                 return res.code(200).send({ message: 'Senha correcta' });
             } catch (error: any) {
+                console.error('Erro ao verificar senha:', error);
                 return res.code(400).send({error})
             }
         } 
@@ -79,10 +81,11 @@ class UsuarioService extends BaseService {
                     return res.status(401).send({ message: 'Usuário não encontrado' });
                 }
                 await userModel.deleteById(user.id.toString());
-                // Fazendo Log out para o usuário após a exclusão da conta do usuário 
+                // Fazendo LogOut para o usuário após a exclusão da conta do usuário 
                 await authService.logOut(req, res);
                 return res.code(200).send({ message: 'Conta deletada com sucesso' });
             } catch (error: any) {
+                console.error('Erro ao excluir conta:', error);
                 return res.code(400).send({ error });
             }
         }

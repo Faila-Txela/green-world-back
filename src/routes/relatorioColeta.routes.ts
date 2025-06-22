@@ -1,9 +1,7 @@
-import { FastifyRequest, FastifyReply } from "fastify";
-import { FastifyInstance } from "fastify";
+import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
 import prisma from "../modules/lib/prisma";
 
-
-export async function graficoRoutes(fastify: FastifyInstance){
+export async function relatorioColeta(fastify: FastifyInstance){
 fastify.put('/relatorio-coleta/:id/status', async (req: FastifyRequest, res: FastifyReply) => {
     const { id } = req.params as { id: string };
     const { statusColeta } = req.body as { statusColeta: 'PENDENTE' | 'NAO_RETIRADO' | 'RETIRADO' };
