@@ -1,5 +1,5 @@
 import prisma from '../modules/lib/prisma'; 
-import { enviarEmail } from '../modules/service/email';
+//import { enviarEmail } from '../modules/service/email';
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 
 // Define o tipo do corpo da requisição 
@@ -17,7 +17,7 @@ export async function emailRoutes(fastify: FastifyInstance) {
 
     try {
       // Envia o e-mail
-      await enviarEmail(email, 'Resposta ao seu contato', mensagem);
+      //await enviarEmail(email, 'Resposta ao seu contato', mensagem);
 
       // Atualiza o campo "respondido" no banco
       await prisma.contactos.updateMany({
