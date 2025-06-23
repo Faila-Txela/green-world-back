@@ -8,7 +8,7 @@ class NotificacaoService extends BaseService {
     createValidationSchema = notificacaoValidations.getData;
     updateValidationSchema = notificacaoValidations.getDataToUpdate;
 
-    async getByEmpresaId(req: FastifyRequest, reply: FastifyReply) {
+async getByEmpresaId(req: FastifyRequest, reply: FastifyReply) {
     try {
         const { id } = notificacaoValidations.getParams.parse(req.params);
         const { lida } = req.query as { lida?: string };
@@ -43,18 +43,21 @@ async getByUserId(req: FastifyRequest, reply: FastifyReply) {
 
 async updateLidaStatus(req: FastifyRequest, reply: FastifyReply) {
     try {
+        console.log('Recebendo requisição para atualizar status:', req.params, req.body);
         const { id } = notificacaoValidations.getParams.parse(req.params);
         const { lida } = notificacaoValidations.getLidaStatus.parse(req.body);
         
         const data = await notificacaoModel.updateLidaStatus(id, lida);
+        console.log('Notificação atualizada:', data);
         return reply.code(200).send(data);
     } catch (error: any) {
+        console.error('Erro detalhado:', error);
         return reply.code(400).send({ 
             message: "Erro ao atualizar status de notificação.",
             error: error.message 
         });
     }
-} 
+}
 
 }
 
