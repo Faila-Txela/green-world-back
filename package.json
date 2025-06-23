@@ -5,7 +5,7 @@
   "module": "common",
   "scripts": {
     "dev": "tsx watch src",
-    "build":"tsc",
+    "build": "tsc",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio",
     "start": "node ./build/index.js"
@@ -37,6 +37,7 @@
     "@prisma/client": "^6.1.0",
     "bcrypt": "^5.1.1",
     "clarifai": "^2.9.1",
+    "clarifai-nodejs": "^0.1.2",
     "cloudinary": "^2.6.0",
     "dotenv": "^16.4.7",
     "exifr": "^7.1.3",

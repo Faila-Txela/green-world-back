@@ -8,6 +8,8 @@ class ContactoService extends BaseService {
     createValidationSchema = contactoValidation.getData;
     updateValidationSchema = contactoValidation.getDataToUpdate;
 
+   
+
     async create(req: FastifyRequest, res: FastifyReply) {
         try {
         const { nome, mensagem, email } = contactoValidation.getData.parse(req.body)
@@ -23,6 +25,19 @@ class ContactoService extends BaseService {
             return res.status(400).send({ message: error });
         }
     }
+
+    // async resendReply(req: FastifyRequest, res: FastifyReply) {
+    //     try {
+    //         const { id } = contactoValidation.getId.parse(req.params);
+    //         const { reply } = contactoValidation.getReply.parse(req.body);
+    //         const updatedContact = await contactoModel.resendReply(id, reply);
+    //         return res.status(200).send(updatedContact);
+    //     } catch (error) {
+    //         console.error(error);
+    //         return res.status(400).send({ message: error });
+    //     }
+    // }
+    
 
 }
 
