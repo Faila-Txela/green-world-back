@@ -14,7 +14,6 @@ const app: FastifyInstance = fastify({
   //Configuração do servidor
 const start = async () => {
     try {
-
         app.register(fastifyCookie)
         await app.register(require('@fastify/secure-session'), {
             secret: jwt_key as string,
@@ -22,7 +21,7 @@ const start = async () => {
             cookie: {
                 name: 'SessionCookie',
                 path: '/',
-                secure: false,   //Formato de desenvolvimento(https = produção)
+                secure: true,   //Formato de desenvolvimento(https = produção)
                 httpOnly: true,
                 maxAge: 3600000,     
             },

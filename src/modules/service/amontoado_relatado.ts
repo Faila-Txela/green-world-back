@@ -41,13 +41,15 @@ async create(req: FastifyRequest, res: FastifyReply) {
         };
 
         // Criar automaticamente o registro de coleta com status PENDENTE
-        await prisma.relatorioColeta.create({
+        const relato = await prisma.relatorioColeta.create({
             data: {
                 user_id: userId,
                 amontoado_id: relatar.id,
                 statusColeta: 'PENDENTE' // Definindo explicitamente
             }
         });
+
+        console.log("Relato de amontoado criado com sucesso:", relato);
 
         const empresas = await empresaModel.getAll();
 
