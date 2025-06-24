@@ -8,8 +8,6 @@ class ContactoService extends BaseService {
     createValidationSchema = contactoValidation.getData;
     updateValidationSchema = contactoValidation.getDataToUpdate;
 
-   
-
     async create(req: FastifyRequest, res: FastifyReply) {
         try {
         const { nome, mensagem, email } = contactoValidation.getData.parse(req.body)

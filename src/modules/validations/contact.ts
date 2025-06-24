@@ -1,17 +1,23 @@
-import z from "zod";
+import { z } from "zod";
 
-class ContactoValidation {
-    getData = z.object({
+export const contactoValidation = {
+    getData: z.object({
         nome: z.string(),
-        email: z.string(),
-        mensagem: z.string(),
-    })
+        email: z.string().email("Email inválido"),
+        mensagem: z.string().min(50, "Mensagem deve ter pelo menos 50 caracteres")
+    }),
 
-    getDataToUpdate = this.getData.partial();
-    
-    getId = z.object({
-        id: z.string().uuid()
-    })
-}
+    getId: z.object({
+        id: z.string().uuid("ID inválido")
+    }),
 
-export const contactoValidation = new ContactoValidation()
+    getReply: z.object({
+        reply: z.string().min(30, "A resposta deve ter pelo menos 30 caracteres")
+    }),
+
+    getDataToUpdate: z.object({
+        nome: z.string(),
+        email: z.string().email("Email inválido").optional(),
+        mensagem: z.string().min(30, "Mensagem deve ter pelo menos 30 caracteres").optional()
+    })
+};
