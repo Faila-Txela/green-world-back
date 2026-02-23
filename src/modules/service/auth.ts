@@ -28,6 +28,7 @@ class AuthService {
         });
     };
 
+    // Fazer logIn
     async login(user: Users| Empresa, req: FastifyRequest) {
         const token = await this.generateToken(user)
         req.session.token = token;
@@ -59,6 +60,7 @@ class AuthService {
         }
     }
 
+    // Fazer logOut
     async logOut(req: FastifyRequest, res: FastifyReply) {
         req.session.delete();
         res.clearCookie('SessionCookie', {

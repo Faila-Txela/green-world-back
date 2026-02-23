@@ -48,7 +48,6 @@ export async function analiseImagem(app: FastifyInstance) {
       }
 
       // Upload da imagem para o Cloudinary
-
       const cloudinaryStartTime = Date.now();
       const imageStream = streamifier.createReadStream(buffer);
       const cloudinaryResult = await new Promise((resolve, reject) => {

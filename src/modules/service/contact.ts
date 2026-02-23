@@ -24,19 +24,6 @@ class ContactoService extends BaseService {
         }
     }
 
-    // async resendReply(req: FastifyRequest, res: FastifyReply) {
-    //     try {
-    //         const { id } = contactoValidation.getId.parse(req.params);
-    //         const { reply } = contactoValidation.getReply.parse(req.body);
-    //         const updatedContact = await contactoModel.resendReply(id, reply);
-    //         return res.status(200).send(updatedContact);
-    //     } catch (error) {
-    //         console.error(error);
-    //         return res.status(400).send({ message: error });
-    //     }
-    // }
-    
-
 }
 
 export const contactoService = new ContactoService();

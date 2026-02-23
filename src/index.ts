@@ -28,11 +28,13 @@ const start = async () => {
             saveUninitialized: false,
             resave: false
         });
-        await app.register(cors, {   //Configuração do CORS (comunicação front e back)
+
+        app.register(cors, {   //Configuração do CORS (comunicação front e back)
             origin: ['http://localhost:5173', 'http://localhost:5174','https://greenworld-eight.vercel.app'],
             credentials: true
         });
-        app.register(multipart, {   //Habilitando o carregamento de arquivos no servidor
+
+       app.register(multipart, {   //Habilitando o carregamento de arquivos no servidor
             limits: {
                 fieldNameSize: 100,
                 fieldSize: 100,
@@ -43,7 +45,7 @@ const start = async () => {
                 parts: 1000
             }
         })
-        app.register(fastifyStatic, {
+       await app.register(fastifyStatic, {
             root: path.join(__dirname, 'uploads'),
             prefix: '/static/',
         });
