@@ -1,9 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
-// Extend FastifyRequest to include the 'user' property
 declare module "fastify" {
     interface FastifyRequest {
-        user?: { senha: string }; // Update 'user' to include the 'senha' property
+        user?: { senha: string }; 
     }
 }
 import { empresaModel } from "../models/empresa";
@@ -19,9 +18,9 @@ class EmpresaService extends BaseService {
 
     async create(req: FastifyRequest, res: FastifyReply) {
         try {
-            const { nome, enderecoId, tipoEmpresa_id, email, nif, senha, site } = empresaValidations.getData.parse(req.body);
+            const { nome, enderecoId, email, nif, senha, site } = empresaValidations.getData.parse(req.body);
             const hashSenha = await hashService.hashPassword(senha);
-            const user = await this.model.create({ nome, enderecoId, tipoEmpresa_id, email, nif: String(nif), senha: hashSenha, site: site ?? null });
+            const user = await this.model.create({ nome, enderecoId, email, nif: String(nif), senha: hashSenha, site: site ?? null });
             return res.status(201).send(user);
         } catch (error) {
             return res.status(400).send({ message: error });

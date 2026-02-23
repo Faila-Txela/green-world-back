@@ -4,7 +4,6 @@ class EmpresaValidation {
     getData = z.object({
         nome: z.string(),
         enderecoId: z.string().uuid(),
-        tipoEmpresa_id: z.string().uuid(),
         site: z.string().optional(),
         email: z.string().email(),
         nif: z.string()

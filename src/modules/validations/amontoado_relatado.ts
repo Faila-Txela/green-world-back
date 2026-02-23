@@ -20,7 +20,6 @@ class AmontoadoRelatadoValidation {
     bairro: z
       .string()
       .max(200, "O bairro deve ter no máximo 200 caracteres.")
-      //.min(20, "O bairro deve ter no mínimo 20 caracteres."),
   });
 
   getDataToUpdate = this.getData.partial();

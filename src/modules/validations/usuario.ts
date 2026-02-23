@@ -5,7 +5,6 @@ class UserValidation {
     nome: z.string(),
     email: z.string().email(),
     senha: z.string(),
-    tipoUser_id: z.string().uuid(),
     iban: z
       .string()
       .transform((val) => val.replace(/\./g, "").toUpperCase()) // remove pontos e torna o IBAN maiúsculo (AO)

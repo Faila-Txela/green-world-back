@@ -8,13 +8,11 @@ export async function usuarios(app: FastifyInstance) {
     app.post('/user/login', usuarioService.login)
     app.get('/user/logOut', authService.logOut)
 
-        // Rota para verificar senha
     app.post('/user/verify-password', {
         preHandler: [authService.autenticate],
         handler: authService.verifyPassword
     });
 
-    // Rota para excluir conta
     app.delete('/user/delete-account/:id', {
         preHandler: [authService.autenticate],
         handler: authService.deleteAccount

@@ -1,11 +1,8 @@
 import { FastifyInstance } from "fastify";
 
-import { tipoUser } from "./tipo_user.routes";
-import { tipoEmpresa } from "./tipo_empresa.routes";
 import { provincia } from "./provincia.routes";
 import { notificacao } from "./notificacao.routes";
 import { feedback } from "./feedback.routes";
-import { pontos } from "./pontos.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
 import contactos from "./contact.routes";
@@ -19,9 +16,7 @@ import { analiseImagem } from './analise_imagem.routes'
 import { graficoRoutes } from "./dashboardData.routes";
 
 export default async function Routes(fastify: FastifyInstance){
-    await tipoEmpresa(fastify);
     await agenda(fastify);
-    await tipoUser(fastify);
     await provincia(fastify);
     await amontoados(fastify);
     await municipio(fastify);
@@ -30,7 +25,6 @@ export default async function Routes(fastify: FastifyInstance){
     await feedback(fastify);
     await relatorioColeta(fastify);
     await emailRoutes(fastify);
-    await pontos(fastify);
     await usuarios(fastify);
     await empresas(fastify);
     await address(fastify);

@@ -1,5 +1,3 @@
-// Modelo base para qualquer outro da aplicação
-
   export abstract class BaseModel<T> {
     protected model: any;
     protected include?: {};

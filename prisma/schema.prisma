@@ -18,7 +18,6 @@ model Users {
   nome              String
   email             String              @unique()
   senha             String
-  tipoUser_id       String
   iban              String?
   nome_titular      String
   createdAt         DateTime            @default(now())
@@ -26,42 +25,25 @@ model Users {
   amontoadorelatado AmontoadoRelatado[]
   notificacao       Notificacao[]
   relatoriocoleta   RelatorioColeta[]
-  tipoUser          TipoUser            @relation(fields: [tipoUser_id], references: [id])
   feedback          Feedback[]
-  pontos            Pontos[]
   Pagamento         Pagamento[]
-  @@index([tipoUser_id])
-}
-
-model TipoUser {
-  id    String  @id @default(uuid())
-  nome  String
-  users Users[]
-}
-
-model TipoEmpresa {
-  id      String    @id @default(uuid())
-  nome    String
-  Empresa Empresa[]
 }
 
 model Empresa {
-  id             String        @id @default(uuid())
-  nome           String
-  enderecoId     String
-  tipoEmpresa_id String
-  email          String        @unique
-  nif            String
-  senha          String
-  site           String?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  endereco       Endereco      @relation(fields: [enderecoId], references: [id])
-  tipo_emprea    TipoEmpresa   @relation(fields: [tipoEmpresa_id], references: [id])
-  pagamento      Pagamento[]
-  agenda         Agenda[]
-  notificacao    Notificacao[]
-  feedbacks      Feedback[]
+  id          String        @id @default(uuid())
+  nome        String
+  enderecoId  String
+  email       String        @unique
+  nif         String
+  senha       String
+  site        String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  endereco    Endereco      @relation(fields: [enderecoId], references: [id])
+  pagamento   Pagamento[]
+  agenda      Agenda[]
+  notificacao Notificacao[]
+  feedbacks   Feedback[]
 }
 
 model Endereco {
@@ -91,28 +73,9 @@ model AmontoadoRelatado {
   users           Users             @relation(fields: [user_id], references: [id])
   relatoriocoleta RelatorioColeta[]
   prioridade      Prioridade
-//  analiseImagem   AnaliseImagem[]
+  //  analiseImagem   AnaliseImagem[]
 
   @@index([user_id])
-}
-
-// model AnaliseImagem {
-//   id                    String      @id @default(autoincrement())
-//   imageUrl              String
-//   labels                Json
-//   analysisDate          DateTime @default(now())
-//   status                String   @default("pending")
-//   createdAt             DateTime @default(now())
-//   updatedAt             DateTime @default(now()) @updatedAt
-//   amontoadoRelatadoId   String
-//   amontoadoRelatado     AmontoadoRelatado  @relation(fields: [amontoadoRelatadoId], references: [id])
-// }
-
-
-enum StatusColeta {
-  RETIRADO
-  NAO_RETIRADO
-  PENDENTE
 }
 
 model Provincia {
@@ -132,24 +95,19 @@ model Municipio {
   AmontoadoRelatado AmontoadoRelatado[]
 }
 
-enum Prioridade {
-  BAIXA
-  ALTA
-}
-
 model Notificacao {
-  id        String   @id @default(uuid())
-  userId    String?
-  empresaId String?
-  titulo    String
-  mensagem  String
-  createAt  DateTime @default(now())
-  updateAt  DateTime
-  recebeEmail  Boolean @default(true)
-  recebeSMS    Boolean @default(false)
-  lida         Boolean @default(false)
-  empresa   Empresa? @relation(fields: [empresaId], references: [id])
-  users     Users?   @relation(fields: [userId], references: [id])
+  id          String   @id @default(uuid())
+  userId      String?
+  empresaId   String?
+  titulo      String
+  mensagem    String
+  createAt    DateTime @default(now())
+  updateAt    DateTime
+  recebeEmail Boolean  @default(true)
+  recebeSMS   Boolean  @default(false)
+  lida        Boolean  @default(false)
+  empresa     Empresa? @relation(fields: [empresaId], references: [id])
+  users       Users?   @relation(fields: [userId], references: [id])
 }
 
 model Agenda {
@@ -170,7 +128,7 @@ model Feedback {
   feedback  String
   createAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
-  empresa   Empresa?  @relation(fields: [empresaId], references: [id])
+  empresa   Empresa? @relation(fields: [empresaId], references: [id])
   user      Users    @relation(fields: [userId], references: [id])
 }
 
@@ -192,25 +150,27 @@ model Pagamento {
   user       Users?   @relation(fields: [user_id], references: [id])
   empresa    Empresa? @relation(fields: [empresa_id], references: [id])
   createAt   DateTime @default(now())
-  upadateAt  DateTime @updatedAt
-}
-
-model Pontos {
-  id        String   @id @default(uuid())
-  userId    String
-  pontos    Int
-  createAt  DateTime @default(now())
-  upadateAt DateTime @updatedAt
-  user      Users    @relation(fields: [userId], references: [id])
+  updateAt   DateTime @updatedAt
 }
 
 model Contactos {
-  id        String   @id @default(uuid())
-  nome      String
-  mensagem  String
-  email     String
-  respondido Boolean @default(false)
+  id           String    @id @default(uuid())
+  nome         String
+  mensagem     String
+  email        String
+  respondido   Boolean   @default(false)
   respondidoEm DateTime?
-  createAt  DateTime @default(now())
-  upadateAt DateTime @updatedAt
+  createAt     DateTime  @default(now())
+  updateAt     DateTime?  @updatedAt
+}
+
+enum StatusColeta {
+  RETIRADO
+  NAO_RETIRADO
+  PENDENTE
+}
+
+enum Prioridade {
+  BAIXA
+  ALTA
 }
