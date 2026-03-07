@@ -3,6 +3,6 @@ import { BaseRoute } from "./base";
 import { contactoService } from "../modules/service/contact";
 
 export default async function contacto(app: FastifyInstance) {
-    await BaseRoute.handle(app, contactoService, 'contacto');
+    await BaseRoute.handle(app, contactoService, 'suporte');
 }
   
