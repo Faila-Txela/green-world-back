@@ -5,7 +5,7 @@ import { notificacao } from "./notificacao.routes";
 import { feedback } from "./feedback.routes";
 import { usuarios } from "./usuario.routes";
 import { empresas } from "./empresa.routes";
-import contactos from "./contact.routes";
+import suporte from "./suporte.routes";
 import { address } from "./address.routes";
 import { municipio } from "./municipio.routes";
 import { amontoados } from "./amontoado_relatado.routes";
@@ -28,5 +28,5 @@ export default async function Routes(fastify: FastifyInstance){
     await usuarios(fastify);
     await empresas(fastify);
     await address(fastify);
-    await contactos(fastify); 
+    await suporte(fastify); 
 }
