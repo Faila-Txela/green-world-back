@@ -3,7 +3,7 @@ import { amontoadoRelatadoModel } from "../models/amontoado_relatado";
 import { amontoadoRelatadoValidations } from "../validations/amontoado_relatado";
 import { BaseService } from "./base";
 import prisma from "../lib/prisma";
-import { Decimal } from "@prisma/client/runtime/library";
+import { Prisma } from "@prisma/client";
 import { notificacaoModel } from "../models/notificacao";
 import { empresaModel } from "../models/empresa";
 class AmontoadoRelatadoService extends BaseService {
@@ -20,8 +20,8 @@ async create(req: FastifyRequest, res: FastifyReply) {
         const relatar = await amontoadoRelatadoModel.create({
             bairro,
             descricao,
-            latitude: new Decimal(latitude),
-            longitude: new Decimal(longitude), 
+            latitude: new Prisma.Decimal(latitude),
+            longitude: new Prisma.Decimal(longitude), 
             user_id: userId, 
             municipioId,
             provinciaId, 
@@ -30,8 +30,8 @@ async create(req: FastifyRequest, res: FastifyReply) {
             id: string;
             user_id: string;
             descricao: string;
-            latitude: Decimal;
-            longitude: Decimal;
+            latitude: Prisma.Decimal;
+            longitude: Prisma.Decimal;
             bairro: string;
             createAt: Date;
             updateAt: Date;

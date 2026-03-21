@@ -1,4 +1,3 @@
-// src/services/grafico.service.ts
 import prisma from "../lib/prisma";
 
 export const graficoService = {
@@ -17,7 +16,7 @@ export const graficoService = {
       
         // Para cada municipioId, buscar o nome correspondente
         const results = await Promise.all(
-          locations.map(async (loc) => {
+          locations.map(async (loc: any) => {
             const municipio = await prisma.municipio.findUnique({
               where: { id: loc.municipioId },
               select: { nome: true },
@@ -41,7 +40,7 @@ export const graficoService = {
       },
     });
 
-    return meses.map((mes) => ({
+    return meses.map((mes: any) => ({
       name: new Date(mes.dataColeta).toLocaleString("pt-PT", {
         month: "long",
       }),
@@ -57,7 +56,7 @@ export const graficoService = {
       },
     });
 
-    return typeGarbage.map((garbage) => ({
+    return typeGarbage.map((garbage: any) => ({
       name: garbage.descricao,
       value: garbage._count.descricao,
     }));
@@ -71,7 +70,7 @@ export const graficoService = {
       },
     });
 
-    return fluxo.map((item) => ({
+    return fluxo.map((item: any) => ({
       status: item.statusColeta,
       total: item._count.statusColeta,
     }));

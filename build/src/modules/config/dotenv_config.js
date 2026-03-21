@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.jwt_expires = exports.jwt_key = exports.algoritmo = exports.crypto_key = exports.host = exports.port = void 0;
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+exports.port = Number(process.env.PORT);
+exports.host = process.env.HOST;
+exports.crypto_key = process.env.CRYPTO_KEY;
+exports.algoritmo = process.env.ALGORITMO;
+exports.jwt_key = process.env.JWT_KEY;
+exports.jwt_expires = process.env.JWT_EXPIRES_IN;
