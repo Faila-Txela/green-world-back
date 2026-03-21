@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { agendaModel } from "../models/agenda";
 import { agendaValidation } from "../validations/agenda";
-import prisma from "../lib/prisma";
+import { prisma } from "../../../prisma/prisma";
 import { BaseService } from "./base";
 
 class AgendaService extends BaseService {

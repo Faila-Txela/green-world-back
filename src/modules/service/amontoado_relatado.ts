@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { amontoadoRelatadoModel } from "../models/amontoado_relatado";
 import { amontoadoRelatadoValidations } from "../validations/amontoado_relatado";
 import { BaseService } from "./base";
-import prisma from "../lib/prisma";
+import { prisma } from "../../../prisma/prisma";
 import { Prisma } from "@prisma/client";
 import { notificacaoModel } from "../models/notificacao";
 import { empresaModel } from "../models/empresa";

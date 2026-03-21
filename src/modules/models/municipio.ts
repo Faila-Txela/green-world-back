@@ -1,6 +1,7 @@
 import { Municipio } from "@prisma/client";
 import { BaseModel }  from "./base";
-import prisma from "../lib/prisma";
+import { prisma } from "../../../prisma/prisma";
+
 
 class MunicipioModel extends BaseModel<Municipio> {
     model = prisma.municipio;

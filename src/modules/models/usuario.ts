@@ -1,6 +1,7 @@
 import { Users } from "@prisma/client";
 import { BaseModel } from "./base";
-import prisma from "../lib/prisma";
+import { prisma } from "../../../prisma/prisma";
+
 
 class UserModel extends BaseModel<Users> {
     protected users = prisma.users

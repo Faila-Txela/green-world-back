@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import prisma from "../lib/prisma";
+import { prisma } from "../../../prisma/prisma";
 import fastify from "fastify";
 
 const app = fastify()

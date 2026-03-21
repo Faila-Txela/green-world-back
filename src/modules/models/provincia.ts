@@ -1,6 +1,7 @@
 import { Provincia } from "@prisma/client"
 import { BaseModel }  from "./base";
-import prisma from "../lib/prisma";
+import { prisma } from "../../../prisma/prisma";
+
 
 class ProvinciaModel extends BaseModel<Provincia> {
     model = prisma.provincia;
