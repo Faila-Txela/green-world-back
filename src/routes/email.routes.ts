@@ -1,5 +1,4 @@
-import prisma from '../modules/lib/prisma'; 
-//import { enviarEmail } from '../modules/service/email';
+import {prisma} from '../../prisma/prisma'; 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 
 // Define o tipo do corpo da requisição 

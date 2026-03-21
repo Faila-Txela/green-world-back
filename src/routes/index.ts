@@ -13,7 +13,6 @@ import { agenda } from "./agenda.routes";
 import { relatorioColeta } from "./relatorioColeta.routes";
 import { emailRoutes } from "./email.routes";
 import { analiseImagem } from './analise_imagem.routes'
-import { graficoRoutes } from "./dashboardData.routes";
 
 export default async function Routes(fastify: FastifyInstance){
     await agenda(fastify);

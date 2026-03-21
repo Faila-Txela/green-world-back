@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
-import prisma from "../modules/lib/prisma";
+import {prisma} from '../../prisma/prisma';
 import { Resend } from 'resend';
 import { z } from 'zod';
 
