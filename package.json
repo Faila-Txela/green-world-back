@@ -5,7 +5,7 @@
   "module": "common",
   "scripts": {
     "dev": "tsx watch src",
-    "build": "tsc",
+    "build": "npm install && npx prisma generate && npm run build",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio",
     "start": "node ./build/index.js"
