@@ -1,10 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.relatorioColeta = relatorioColeta;
-const prisma_1 = __importDefault(require("../modules/lib/prisma"));
+const prisma_1 = require("../../prisma/prisma");
 const resend_1 = require("resend");
 const zod_1 = require("zod");
 // Esquema de validação
@@ -28,7 +25,7 @@ async function relatorioColeta(fastify) {
         const { statusColeta } = validationResult.data;
         try {
             // 1. Verifica se o amontoado existe e tem relatório
-            const amontoadoComRelatorio = await prisma_1.default.amontoadoRelatado.findUnique({
+            const amontoadoComRelatorio = await prisma_1.prisma.amontoadoRelatado.findUnique({
                 where: { id: amontoadoId },
                 include: {
                     relatoriocoleta: {
@@ -52,7 +49,7 @@ async function relatorioColeta(fastify) {
             }
             console.log("Amontoado encontrado:", amontoadoComRelatorio);
             // 2. Atualização do status
-            const relatorioAtualizado = await prisma_1.default.relatorioColeta.update({
+            const relatorioAtualizado = await prisma_1.prisma.relatorioColeta.update({
                 where: { id: amontoadoComRelatorio.relatoriocoleta[0].id },
                 data: { statusColeta },
                 include: {
@@ -82,7 +79,7 @@ async function relatorioColeta(fastify) {
             // 4. Processamento de notificações
             try {
                 // Notificação no banco de dados
-                await prisma_1.default.notificacao.create({
+                await prisma_1.prisma.notificacao.create({
                     data: {
                         userId: user.id,
                         titulo: 'Atualização de Relato',

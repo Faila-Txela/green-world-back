@@ -1,10 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.emailRoutes = emailRoutes;
-const prisma_1 = __importDefault(require("../modules/lib/prisma"));
+const prisma_1 = require("../../prisma/prisma");
 async function emailRoutes(fastify) {
     fastify.post('/responder-contacto', async (req, reply) => {
         const { email, mensagem } = req.body;
@@ -12,7 +9,7 @@ async function emailRoutes(fastify) {
             // Envia o e-mail
             //await enviarEmail(email, 'Resposta ao seu contato', mensagem);
             // Atualiza o campo "respondido" no banco
-            await prisma_1.default.contactos.updateMany({
+            await prisma_1.prisma.contactos.updateMany({
                 where: { email },
                 data: { respondido: true },
             });

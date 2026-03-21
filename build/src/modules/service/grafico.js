@@ -1,14 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.graficoService = void 0;
-// src/services/grafico.service.ts
-const prisma_1 = __importDefault(require("../lib/prisma"));
+const prisma_1 = require("../../../prisma/prisma");
 exports.graficoService = {
     async getLocationsData() {
-        const locations = await prisma_1.default.amontoadoRelatado.groupBy({
+        const locations = await prisma_1.prisma.amontoadoRelatado.groupBy({
             by: ["municipioId"],
             _count: {
                 municipioId: true,
@@ -21,7 +17,7 @@ exports.graficoService = {
         });
         // Para cada municipioId, buscar o nome correspondente
         const results = await Promise.all(locations.map(async (loc) => {
-            const municipio = await prisma_1.default.municipio.findUnique({
+            const municipio = await prisma_1.prisma.municipio.findUnique({
                 where: { id: loc.municipioId },
                 select: { nome: true },
             });
@@ -33,7 +29,7 @@ exports.graficoService = {
         return results;
     },
     async getMonthsData() {
-        const meses = await prisma_1.default.relatorioColeta.groupBy({
+        const meses = await prisma_1.prisma.relatorioColeta.groupBy({
             by: ["dataColeta"],
             _count: {
                 dataColeta: true,
@@ -47,7 +43,7 @@ exports.graficoService = {
         }));
     },
     async getWasteTypeData() {
-        const typeGarbage = await prisma_1.default.amontoadoRelatado.groupBy({
+        const typeGarbage = await prisma_1.prisma.amontoadoRelatado.groupBy({
             by: ["descricao"],
             _count: {
                 descricao: true,
@@ -59,7 +55,7 @@ exports.graficoService = {
         }));
     },
     async getFluxoRecolhaData() {
-        const fluxo = await prisma_1.default.relatorioColeta.groupBy({
+        const fluxo = await prisma_1.prisma.relatorioColeta.groupBy({
             by: ["statusColeta"],
             _count: {
                 statusColeta: true,

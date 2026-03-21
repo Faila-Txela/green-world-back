@@ -1,14 +1,11 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.amontoadoRelatadoService = void 0;
 const amontoado_relatado_1 = require("../models/amontoado_relatado");
 const amontoado_relatado_2 = require("../validations/amontoado_relatado");
 const base_1 = require("./base");
-const prisma_1 = __importDefault(require("../lib/prisma"));
-const library_1 = require("@prisma/client/runtime/library");
+const prisma_1 = require("../../../prisma/prisma");
+const client_1 = require("@prisma/client");
 const notificacao_1 = require("../models/notificacao");
 const empresa_1 = require("../models/empresa");
 class AmontoadoRelatadoService extends base_1.BaseService {
@@ -23,15 +20,15 @@ class AmontoadoRelatadoService extends base_1.BaseService {
             const relatar = await amontoado_relatado_1.amontoadoRelatadoModel.create({
                 bairro,
                 descricao,
-                latitude: new library_1.Decimal(latitude),
-                longitude: new library_1.Decimal(longitude),
+                latitude: new client_1.Prisma.Decimal(latitude),
+                longitude: new client_1.Prisma.Decimal(longitude),
                 user_id: userId,
                 municipioId,
                 provinciaId,
                 prioridade,
             });
             // Criar automaticamente o registro de coleta com status PENDENTE
-            const relato = await prisma_1.default.relatorioColeta.create({
+            const relato = await prisma_1.prisma.relatorioColeta.create({
                 data: {
                     user_id: userId,
                     amontoado_id: relatar.id,

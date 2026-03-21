@@ -1,16 +1,13 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.contactoModel = void 0;
 const base_1 = require("./base");
-const prisma_1 = __importDefault(require("../lib/prisma"));
+const prisma_1 = require("../../../prisma/prisma");
 class ContactoModel extends base_1.BaseModel {
-    model = prisma_1.default.contactos;
+    model = prisma_1.prisma.contactos;
     include = {};
     async create(data) {
-        return await prisma_1.default.contactos.create({
+        return await prisma_1.prisma.contactos.create({
             data: {
                 nome: data.nome,
                 email: data.email,
@@ -19,7 +16,7 @@ class ContactoModel extends base_1.BaseModel {
         });
     }
     async resendReply(id, reply) {
-        return await prisma_1.default.contactos.update({
+        return await prisma_1.prisma.contactos.update({
             where: { id },
             data: {
                 respondido: true,
@@ -29,7 +26,7 @@ class ContactoModel extends base_1.BaseModel {
         });
     }
     async findById(id) {
-        return await prisma_1.default.contactos.findUnique({
+        return await prisma_1.prisma.contactos.findUnique({
             where: { id }
         });
     }
