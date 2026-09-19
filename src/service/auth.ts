@@ -1,11 +1,11 @@
-import { jwt_expires, jwt_key } from './../config/dotenv_config';
+import { jwt_expires, jwt_key } from '../modules/config/dotenv_config';
 import 'fastify';
 import '@fastify/secure-session';
 import { Users, Empresa } from '@prisma/client';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { hashService } from "./hash";
-import { userValidations } from '../validations/usuario';
+import { userValidations } from '../validators/usuario';
 import { usuarioService } from './usuario';
 
 declare module '@fastify/secure-session' {

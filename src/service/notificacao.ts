@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { notificacaoModel } from "../models/notificacao";
-import { notificacaoValidations } from "../validations/notificacao";
+import { notificacaoModel } from "../modules/model/notificacao";
+import { notificacaoValidations } from "../validators/notificacao";
 import { BaseService } from "./base";
 
 class NotificacaoService extends BaseService {

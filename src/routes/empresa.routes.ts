@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { BaseRoute } from "./base";
-import { empresaService } from "../modules/service/empresa";
-import { authService } from "../modules/service/auth";
+import { empresaService } from "../service/empresa";
+import { authService } from "../service/auth";
 
 export async function empresas(app: FastifyInstance) {
     await BaseRoute.handle(app, empresaService, 'empresas');

@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { feedbackModel } from "../models/feedback";
-import { feedbackValidations } from "../validations/feedbacks";
+import { feedbackModel } from "../modules/model/feedback";
+import { feedbackValidations } from "../validators/feedbacks";
 import { BaseService } from "./base";
 
 class FeedbackService extends BaseService {

@@ -1,11 +1,11 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { amontoadoRelatadoModel } from "../models/amontoado_relatado";
-import { amontoadoRelatadoValidations } from "../validations/amontoado_relatado";
+import { amontoadoRelatadoModel } from "../modules/model/amontoado_relatado";
+import { amontoadoRelatadoValidations } from "../validators/amontoado_relatado";
 import { BaseService } from "./base";
 import { prisma } from "../../../prisma/prisma";
 import { Prisma } from "@prisma/client";
-import { notificacaoModel } from "../models/notificacao";
-import { empresaModel } from "../models/empresa";
+import { notificacaoModel } from "../modules/model/notificacao";
+import { empresaModel } from "../modules/model/empresa";
 class AmontoadoRelatadoService extends BaseService {
     model = amontoadoRelatadoModel;
     createValidationSchema = amontoadoRelatadoValidations.getData;

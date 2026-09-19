@@ -5,8 +5,8 @@ declare module "fastify" {
         user?: { senha: string }; 
     }
 }
-import { empresaModel } from "../models/empresa";
-import { empresaValidations } from "../validations/empresa";
+import { empresaModel } from "../modules/model/empresa";
+import { empresaValidations } from "../validators/empresa";
 import { BaseService } from "./base";
 import { hashService } from "./hash";
 import { authService } from "./auth";

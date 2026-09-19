@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { contactoModel } from "../models/contact";
-import { contactoValidation } from "../validations/contact";
+import { contactoModel } from "../modules/model/contact";
+import { contactoValidation } from "../validators/contact";
 import { BaseService } from "./base";
 
 class ContactoService extends BaseService {

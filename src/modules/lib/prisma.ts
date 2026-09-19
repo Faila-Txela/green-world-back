@@ -1,8 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
-
 const prisma = new PrismaClient({
-  datasourceUrl: process.env.DATABASE_URL as string,
+  log: ['error', 'warn',"query"], 
 });
 
-export const db = prisma;
+export default prisma;

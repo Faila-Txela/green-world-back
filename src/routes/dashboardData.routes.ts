@@ -1,6 +1,5 @@
-// src/routes/grafico.routes.ts
 import { FastifyInstance } from "fastify";
-import { graficoService } from "../modules/service/grafico";
+import { graficoService } from "../service/grafico";
 
 export async function graficoRoutes(fastify: FastifyInstance) {
   fastify.get("/graficos/locais", async (_, res) => {

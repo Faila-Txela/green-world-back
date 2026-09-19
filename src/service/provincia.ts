@@ -1,5 +1,5 @@
-import { provinciaModel } from "../models/provincia";
-import { provinciaValidations } from "../validations/provincia";
+import { provinciaModel } from "../modules/model/provincia";
+import { provinciaValidations } from "../validators/provincia";
 import { BaseService } from "./base";
 
 class ProvinciaService extends BaseService {

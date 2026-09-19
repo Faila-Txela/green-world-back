@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { municipioModel } from "../models/municipio";
-import { municipioValidations } from "../validations/municipio";
+import { municipioModel } from "../modules/model/municipio";
+import { municipioValidations } from "../validators/municipio";
 import { BaseService } from "./base";
 
 class MunicipioService extends BaseService {

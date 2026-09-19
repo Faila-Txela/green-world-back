@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { agendaModel } from "../models/agenda";
-import { agendaValidation } from "../validations/agenda";
+import { agendaModel } from "../modules/model/agenda";
+import { agendaValidation } from "../validators/agenda";
 import { prisma } from "../../../prisma/prisma";
 import { BaseService } from "./base";
 

@@ -1,5 +1,5 @@
-import { userModel } from "../models/usuario";
-import { userValidations } from "../validations/usuario";
+import { userModel } from "../modules/model/usuario";
+import { userValidations } from "../validators/usuario";
 import { BaseService } from "./base";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { hashService } from "./hash";

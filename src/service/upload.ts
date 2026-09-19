@@ -4,7 +4,7 @@ import path from 'path';
 import { pipeline } from 'stream';
 import { MultipartFile } from '@fastify/multipart';
 import { FastifyRequest } from 'fastify';
-import { UploadedFile } from '../@types/upload';
+import { UploadedFile } from '../modules/@types/upload';
 
 class UploadService {
     private uploadDir: string = path.join(__dirname, '../../uploads');

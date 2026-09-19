@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { BaseService } from "../../modules/service/base";
+import { BaseService } from "../../service/base";
 
 export class BaseRoute{
     static async handle(

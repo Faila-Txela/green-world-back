@@ -38,65 +38,10 @@ Para o sistema da Green World, melhor usar o Fastify pelos seguintes motivos:
 # }
 
 
-
-
 VARIÁVEIS DE AMBIENTES SÃO VARIÁVEIS FUNDAMENTAIS PARA O FUNCIONAMENTO DE UM SISTEMA;
 
 Midllewares;
 
-
-
 ## Nodejs and his components
 
 # O try...catch serve para capturar erros e evitar que o servidor quebre.
-
-
-
-  ## SQL
-
- # Inner join da tabela Users
-SELECT 
-    u.id AS user_id,
-    u.nome AS user_name,
-    u.email AS user_email,
-    t.id AS tipo_user_id,
-    t.nome AS tipo_user_name
-FROM Users u
-INNER JOIN TipoUser t ON u.tipoUser_id = t.id;
-
-
-# Inner join da tabela AmontoadoRelatado
-
-SELECT 
-    u.id AS user_id,
-    u.nome AS user_name,
-    a.id AS amontoado_id,
-    a.descricao AS descricao,
-    a.latitude,
-    a.longitude
-FROM Users u
-INNER JOIN AmontoadoRelatado a ON u.id = a.user_id;
-
-
-# Inner join da tabela Empresa
-
-SELECT 
-    e.id AS empresa_id,
-    e.nome AS empresa_nome,
-    en.rua,
-    en.bairro,
-    en.telefone
-FROM Empresa e
-INNER JOIN Endereco en ON e.enderecoId = en.id;
-
-
-# Inner join da tabela Pagamento
-
-SELECT 
-    p.id AS pagamento_id,
-    COALESCE(u.nome, e.nome) AS pagador_nome,
-    p.valor,
-    p.createAt
-FROM Pagamento p
-LEFT JOIN Users u ON p.user_id = u.id
-LEFT JOIN Empresa e ON p.empresa_id = e.id;

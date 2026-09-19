@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { ZodSchema } from "zod"
-import { BaseModel } from "../../models/base";
-import { ParamsValidations } from "../../validations/params";
+import { BaseModel } from "../../modules/model/base";
+import { ParamsValidations } from "../../validators/params";
 
 export abstract class BaseService {
     protected abstract model: BaseModel<any>;

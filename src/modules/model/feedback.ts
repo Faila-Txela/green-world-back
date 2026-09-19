@@ -1,6 +1,6 @@
 import { Feedback } from "@prisma/client";
 import { BaseModel }  from "./base";
-import { prisma } from "../../../prisma/prisma";
+import prisma from "../lib/prisma";
 
 
 class FeedbackModel extends BaseModel<Feedback> {
