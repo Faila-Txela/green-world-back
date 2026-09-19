@@ -45,3 +45,8 @@ Midllewares;
 ## Nodejs and his components
 
 # O try...catch serve para capturar erros e evitar que o servidor quebre.
+
+#   //Instanciando o Fastify (logger: true),simboliza que ele vai mostrar logs no console,facilitando a inspenção de erros.
+const app: FastifyInstance = fastify({
+    logger: true
+})

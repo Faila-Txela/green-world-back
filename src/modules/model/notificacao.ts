@@ -2,7 +2,6 @@ import { Notificacao } from "@prisma/client"
 import { BaseModel }  from "./base";
 import prisma from "../lib/prisma";
 
-
 class NotificacaoModel extends BaseModel<Notificacao> {
     model = prisma.notificacao;
     include = {}
@@ -25,7 +24,7 @@ async getByEmpresaId(empresaId: string, lida?: boolean) {
             //...(lida !== undefined && { lida })
         },
         orderBy: {
-            createAt: 'desc' // Ordena por data decrescente
+            createdAt: 'desc'
         }
     });
 }
@@ -36,7 +35,7 @@ async getByUserId(userId: string) {
             userId
         },
         orderBy: {
-            createAt: 'desc' // Ordena por data decrescente
+            createdAt: 'desc'
         }
     });
 }

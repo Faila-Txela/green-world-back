@@ -1,14 +1,11 @@
 import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
 import prisma from "../modules/lib/prisma";
-import { Resend } from 'resend';
 import { z } from 'zod';
 
 // Esquema de validação
 const updateStatusSchema = z.object({
   statusColeta: z.enum(['PENDENTE', 'NAO_RETIRADO', 'RETIRADO'])
 });
-
-const resend = new Resend('re_9JQCKXzv_3exf8ZCTogu1wSCdbg5DTGvN');
 
   export async function relatorioColeta(fastify: FastifyInstance) {
     fastify.put('/amontoado/:amontoadoId/status-coleta', async (req: FastifyRequest, res: FastifyReply) => {
@@ -102,11 +99,6 @@ const resend = new Resend('re_9JQCKXzv_3exf8ZCTogu1wSCdbg5DTGvN');
           }
         });
 
-        // Enviar e-mail se permitido
-        if (user.notificacao && user.notificacao.length > 0 && user.email) {
-          await sendEmailNotification(user.email, user.nome, mensagem);
-        }
-
       } catch (notificationError) {
         console.error('Erro no processo de notificação:', notificationError);
         // Não falha a operação principal por causa da notificação
@@ -132,29 +124,4 @@ const resend = new Resend('re_9JQCKXzv_3exf8ZCTogu1wSCdbg5DTGvN');
   });
 }
 
-// Função auxiliar para envio de e-mail
-async function sendEmailNotification(email: string, nome: string, mensagem: string) {
-  try {
-    await resend.emails.send({
-      from: 'Green World <onboarding@resend.dev>',
-      to: email,
-      subject: 'Atualização no status do seu relato',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #2e7d32;">Olá ${nome},</h2>
-          <p>${mensagem}</p>
-          <p>Acesse nosso aplicativo para mais detalhes.</p>
-          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
-            <p style="font-size: 0.9em; color: #666;">
-              Atenciosamente,<br>
-              <strong>Equipe Green World</strong>
-            </p>
-          </div>
-        </div>
-      `
-    });
-  } catch (emailError) {
-    console.error('Erro ao enviar e-mail:', emailError);
-    throw emailError;
-  }
-}
+// Criar função auxiliar para envio de e-mails

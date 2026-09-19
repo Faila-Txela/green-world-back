@@ -7,11 +7,10 @@ import fastifyStatic from '@fastify/static';
 import path from 'path';
 import Routes from './routes';
 
-  //Instanciando o Fastify (logger: true),simboliza que ele vai mostrar logs no console,facilitando a inspenção de erros.
 const app: FastifyInstance = fastify({
     logger: true
 })
-  //Configuração do servidor
+  
 const start = async () => {
     try {
         app.register(fastifyCookie)
@@ -53,7 +52,7 @@ const start = async () => {
         app.register(Routes);
 
         await app.listen({ port: Number(port), host });
-        console.log(`O servidor está rodando na porta ${port}`);
+        console.log(`O servidor está rodando na porta ${port}🚀`);
         
     } catch (err) {
         console.log(err);
