@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { prisma } from "../../../prisma/prisma";
+import prisma from "../modules/lib/prisma";
 import fastify from "fastify";
 
 const app = fastify()
@@ -17,4 +17,3 @@ app.put('/relatorio-coleta/:id/status', async (req: FastifyRequest, res: Fastify
   
     return res.send(relatorioAtualizado);
   });
-  

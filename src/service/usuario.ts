@@ -81,7 +81,8 @@ class UsuarioService extends BaseService {
                     return res.status(401).send({ message: 'Usuário não encontrado' });
                 }
                 await userModel.deleteById(user.id.toString());
-                // Fazendo LogOut para o usuário após a exclusão da conta do usuário 
+                
+                // LogOut para o usuário após a exclusão da conta do usuário 
                 await authService.logOut(req, res);
                 return res.code(200).send({ message: 'Conta deletada com sucesso' });
             } catch (error: any) {

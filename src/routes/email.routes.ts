@@ -1,4 +1,4 @@
-import {prisma} from '../../prisma/prisma'; 
+import prisma from '../modules/lib/prisma';
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 
 // Define o tipo do corpo da requisição 

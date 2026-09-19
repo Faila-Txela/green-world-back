@@ -28,7 +28,7 @@ class AuthService {
         });
     };
 
-    // Fazer logIn
+    // logIn
     async login(user: Users| Empresa, req: FastifyRequest) {
         const token = await this.generateToken(user)
         req.session.token = token;
@@ -60,7 +60,7 @@ class AuthService {
         }
     }
 
-    // Fazer logOut
+    // LogOut
     async logOut(req: FastifyRequest, res: FastifyReply) {
         req.session.delete();
         res.clearCookie('SessionCookie', {
@@ -109,10 +109,9 @@ class AuthService {
             return res.status(400).send({ message: 'Senha incorreta' });
         }
 
-        // Lógica para excluir o usuário do banco de dados
         await usuarioService.deleteAccount(req, res);
 
-        // Fazer logout após exclusão
+        // Logout após exclusão
         req.session.delete();
         res.clearCookie('SessionCookie', { path: '/' });
 

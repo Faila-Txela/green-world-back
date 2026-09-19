@@ -1,4 +1,5 @@
-import { prisma } from "../../../prisma/prisma";
+
+import prisma from "../modules/lib/prisma";
 
 export const graficoService = {
     async getLocationsData() {

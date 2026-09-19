@@ -9,4 +9,3 @@ class ProvinciaService extends BaseService {
 }
 
 export const provinciaService = new ProvinciaService();
-

@@ -5,4 +5,3 @@ import { contactoService } from "../service/contact";
 export default async function suporte(app: FastifyInstance) {
     await BaseRoute.handle(app, contactoService, 'suporte');
 }
-  

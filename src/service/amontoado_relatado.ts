@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { amontoadoRelatadoModel } from "../modules/model/amontoado_relatado";
 import { amontoadoRelatadoValidations } from "../validators/amontoado_relatado";
 import { BaseService } from "./base";
-import { prisma } from "../../../prisma/prisma";
+import prisma from "../modules/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { notificacaoModel } from "../modules/model/notificacao";
 import { empresaModel } from "../modules/model/empresa";
@@ -16,7 +16,6 @@ async create(req: FastifyRequest, res: FastifyReply) {
         // Validação de dados da requisição
         const { userId, descricao, latitude, longitude, bairro, municipioId, provinciaId, prioridade } = amontoadoRelatadoValidations.getData.parse(req.body);
 
-        // Criando o relato de amontoado no banco de dados
         const relatar = await amontoadoRelatadoModel.create({
             bairro,
             descricao,
@@ -60,36 +59,11 @@ async create(req: FastifyRequest, res: FastifyReply) {
                 titulo: "Novo amontoado feito",
                 mensagem: `Novo relato de amontoado recebido em sua área.`,
                 userId: null,
-                createAt: new Date(),
-                updateAt: new Date(),
                 recebeEmail: false,
                 recebeSMS: false,
                 lida: false
             });
         }
-
-         // Pontos: adicionar 5 por relato
-            // const pontosGanhos = 5;
-    
-            // const pontosExistente = await prisma.pontos.findUnique({
-            //     where: { id: userId },
-            // });
-    
-            // if (pontosExistente) {
-            //     await prisma.pontos.update({
-            //         where: { id : userId },
-            //         data: {
-            //             pontos: { increment: pontosGanhos },
-            //         },
-            //     });
-            // } else {
-            //     await prisma.pontos.create({
-            //         data: {
-            //             userId,
-            //             pontos: pontosGanhos,
-            //         },
-            //     });
-            // }
 
         return res.status(201).send(relatar);
     } catch (error: any) {

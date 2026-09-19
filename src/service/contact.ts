@@ -15,7 +15,7 @@ class ContactoService extends BaseService {
             nome,
             mensagem,
             email,
-        });
+        })
         return res.status(201).send(contacto);
 
         } catch (error) {
